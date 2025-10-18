@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Search, Filter,Code,Smartphone,Palette,Megaphone, Building, Users, Calendar, Sparkles, Briefcase } from "lucide-react";
 import ApplicationForm from "../components/Jobs/ApplicationForm";
-import JobDetail from "../components/Jobs/JobDetail";
-import JobCard from "../components/Jobs/JobCard";
+import JobDetail from "../components/Jobs/JObDetail";
+import JobCard from "../components/Jobs/JObCard";
 
 
 const Jobs = () => {

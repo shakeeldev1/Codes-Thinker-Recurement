@@ -71,7 +71,7 @@ const ChoosePath = () => {
                     key={i}
                     className="flex items-center text-gray-700 transition-all duration-300 hover:translate-x-1"
                   >
-                    <span className="mr-2 text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#1a84d2] to-[#070052]">
+                    <span className="mr-2 text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#0f00aa] to-[#070052]">
                       ✔
                     </span>
                     {feature}
@@ -83,7 +83,8 @@ const ChoosePath = () => {
               <div className="text-center mt-auto">
                 <a
                   href={path.link}
-                  className="inline-block px-8 py-3 rounded-full font-semibold text-white bg-gradient-to-r from-[#544abe] to-[#070052] hover:from-[#070052] hover:to-[#1a84d2] transition-all duration-500 shadow-md hover:shadow-lg transform hover:-translate-y-1"
+                    
+                  className="inline-block px-8 py-3 rounded-full font-semibold text-white bg-gradient-to-r from-[#160ab9] to-[#070052]  hover:from-[#042741] hover:to-[#1a0dab] transition-all duration-500 shadow-md hover:shadow-lg transform hover:-translate-y-1"
                 >
                   {path.buttonText}
                 </a>

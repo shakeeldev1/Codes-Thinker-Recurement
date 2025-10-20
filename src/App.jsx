@@ -1,11 +1,10 @@
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
-import './App.css'
+import './App.css';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import Home from './pages/Home';
-import ChoosePath from './pages/ChoosePath';
-import StudentsAdmissionForm from './pages/StudentsAdmissionForm';
 import Jobs from './pages/Jobs';
+import JobDetail from './pages/JobDetail';
 
 const MainComponent = () => {
   return (
@@ -15,22 +14,22 @@ const MainComponent = () => {
       <Footer />
     </div>
   );
-}
+};
 
 const router = createBrowserRouter([
   {
-    path: '/', element: <MainComponent />, children: [
+    path: '/',
+    element: <MainComponent />,
+    children: [
       { path: '/', element: <Home /> },
-      {path: "/choose-path",element: <ChoosePath />},
-      {path: "/jobs",element: <Jobs />},
-      
-      {path: "/students-admission-form",element: <StudentsAdmissionForm/>},
-    ]
-  }
+      { path: '/jobs', element: <Jobs /> },
+      { path: '/jobs/:id', element: <JobDetail /> },
+    ],
+  },
 ]);
 
 function App() {
   return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;

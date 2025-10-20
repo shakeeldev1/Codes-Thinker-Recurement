@@ -1,0 +1,295 @@
+import React, { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+    ArrowLeft,
+    MapPin,
+    Clock,
+    DollarSign,
+    Users,
+    Building,
+    Award,
+    Zap,
+    Star,
+    Shield,
+    Heart,
+    TrendingUp,
+} from "lucide-react";
+import { jobsData } from "./Jobs";
+import ApplicationForm from "./ApplicationForm";
+import { motion } from "framer-motion";
+
+const JobDetail = () => {
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
+    const [isSaved, setIsSaved] = useState(false);
+
+    const job = jobsData.find((j) => j.id === Number(id));
+
+    if (!job) {
+        return (
+            <div className="min-h-screen bg-gradient-to-br from-[#060145] to-[#0a0280] flex items-center justify-center px-4">
+                <motion.div
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="text-center text-white p-8 max-w-md"
+                >
+                    <div className="w-24 h-24 mx-auto mb-6 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm">
+                        <Users className="w-12 h-12 text-[#F59C20]" />
+                    </div>
+                    <h2 className="text-3xl font-bold mb-4">Opportunity Not Found</h2>
+                    <p className="text-white/80 mb-8">
+                        This position has been filled or is no longer available.
+                    </p>
+                    <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => navigate("/jobs")}
+                        className="px-8 py-4 bg-[#F59C20] text-[#060145] font-bold rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300"
+                    >
+                        Explore Open Positions
+                    </motion.button>
+                </motion.div>
+            </div>
+        );
+    }
+
+    const handleSubmit = (formData) => {
+        console.log("📨 Application Submitted:", formData);
+        alert(`Application submitted for ${job.title}!`);
+        setShowModal(false);
+    };
+
+    const handleSaveJob = () => {
+        setIsSaved(!isSaved);
+    };
+
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+            {/* Background Elements */}
+            <div className="fixed inset-0 overflow-hidden pointer-events-none">
+                <div className="absolute top-20 left-10 w-72 h-72 bg-[#F59C20]/10 rounded-full blur-3xl" />
+                <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#060145]/10 rounded-full blur-3xl" />
+            </div>
+
+            <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-10">
+                {/* Header */}
+                <motion.div
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="flex items-center justify-between mb-8"
+                >
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="group flex items-center gap-3 px-6 py-3 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl border border-white/20 hover:border-[#F59C20]/30 transition-all duration-300"
+                    >
+                        <ArrowLeft className="w-5 h-5 text-[#060145] group-hover:text-[#F59C20]" />
+                        <span className="font-semibold text-[#060145] group-hover:text-[#F59C20]">
+                            Back to Jobs
+                        </span>
+                    </button>
+
+                    <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={handleSaveJob}
+                        className={`p-3 rounded-2xl backdrop-blur-sm border transition-all duration-300 ${isSaved
+                                ? "bg-[#F59C20]/20 border-[#F59C20] text-[#F59C20] shadow-lg"
+                                : "bg-white/80 border-white/20 text-[#060145] hover:border-[#F59C20]/30"
+                            }`}
+                    >
+                        <Heart className={`w-6 h-6 ${isSaved ? "fill-current" : ""}`} />
+                    </motion.button>
+                </motion.div>
+
+                {/* Main Content Grid */}
+                <div className="grid lg:grid-cols-3 gap-6 lg:gap-10 max-w-[1300px] mx-auto">
+                    {/* Left Column */}
+                    <div className="lg:col-span-2 space-y-8">
+                        {/* Hero Section */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6 }}
+                            className="relative bg-gradient-to-br from-[#060145] to-[#0a0280] rounded-3xl p-10 text-white shadow-2xl overflow-hidden w-full"
+                        >
+                            <div className="absolute inset-0" />
+
+                            <div className="relative z-10">
+                                <div className="flex items-start justify-between mb-6">
+                                    <div className="flex items-center gap-4">
+                                        <div className="p-4 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/20">
+                                            {job.icon && typeof job.icon !== "string" ? (
+                                                job.icon
+                                            ) : (
+                                                <Building className="w-8 h-8" />
+                                            )}
+                                        </div>
+                                        <div>
+                                            <h1 className="text-4xl font-bold mb-2">{job.title}</h1>
+                                            <p className="text-xl text-white/80 flex items-center gap-2">
+                                                <Building className="w-5 h-5" />
+                                                {job.company}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    {job.featured && (
+                                        <div className="flex items-center gap-2 px-4 py-2 bg-[#F59C20] text-[#060145] rounded-full font-bold">
+                                            <Star className="w-4 h-4 fill-current" /> Featured
+                                        </div>
+                                    )}
+                                </div>
+
+                                <p className="text-lg text-white/90 leading-relaxed mb-8">
+                                    {job.description}
+                                </p>
+
+                                {/* Stats */}
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <Stat icon={<Clock />} label="Type" value={job.type} />
+                                    <Stat icon={<MapPin />} label="Location" value={job.location} />
+                                    <Stat icon={<DollarSign />} label="Salary" value={job.salary} />
+                                    <Stat icon={<TrendingUp />} label="Experience" value={job.experience} />
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        {/* Role & Requirements */}
+                        <div className="flex w-[810px] gap-3">
+                            <DetailsCard
+                                title="Your Role"
+                                icon={<Users className="text-[#060145]" />}
+                                color="[#060145]"
+                                items={job.responsibilities}
+                            />
+                            <DetailsCard
+                                title="Requirements"
+                                icon={<Award className="text-[#F59C20]" />}
+                                color="[#F59C20]"
+                                items={job.requirements}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Right Column */}
+                    <div className="space-y-6">
+                        <ApplyCard
+                            job={job}
+                            setShowModal={setShowModal}
+                            handleSaveJob={handleSaveJob}
+                        />
+                        <PerksCard />
+                    </div>
+                </div>
+            </div>
+
+            {showModal && (
+                <ApplicationForm
+                    job={job}
+                    onCancel={() => setShowModal(false)}
+                    onSubmit={handleSubmit}
+                />
+            )}
+        </div>
+    );
+};
+
+// Small Components
+const Stat = ({ icon, label, value }) => (
+    <div className="text-center p-4 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/20">
+        <div className="w-6 h-6 mx-auto mb-2 text-[#F59C20]">{icon}</div>
+        <div className="text-sm text-white/80">{label}</div>
+        <div className="font-semibold">{value}</div>
+    </div>
+);
+
+const DetailsCard = ({ title, icon, color, items }) => (
+    <motion.div
+        initial={{ opacity: 0, x: -30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.2 }}
+        className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 hover:border-[#F59C20]/30 transition-all duration-300 w-full"
+    >
+        <div className="flex items-center gap-3 mb-6">
+            <div className={`p-3 bg-${color}/10 rounded-xl`}>{icon}</div>
+            <h3 className="text-2xl font-bold text-[#060145]">{title}</h3>
+        </div>
+        <ul className="space-y-4">
+            {items.map((item, i) => (
+                <li
+                    key={i}
+                    className="flex items-start gap-4 p-3 rounded-xl hover:bg-[#F59C20]/5 transition-colors"
+                >
+                    <div className="w-2 h-2 bg-[#F59C20] rounded-full mt-2 flex-shrink-0" />
+                    <span className="text-gray-700 leading-relaxed">{item}</span>
+                </li>
+            ))}
+        </ul>
+    </motion.div>
+);
+
+const ApplyCard = ({ job, setShowModal }) => (
+    <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+        className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 sticky top-8 w-full"
+    >
+        <div className="text-center mb-6">
+            <div className="w-16 h-16 mx-auto mb-4 bg-[#110c61] rounded-2xl flex items-center justify-center">
+                <Zap className="w-8 h-8 text-[#ffb340]" />
+            </div>
+            <h3 className="text-2xl font-bold text-[#060145] mb-2">Ready to Apply?</h3>
+            <p className="text-gray-600">Join this amazing opportunity today</p>
+        </div>
+
+        <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => setShowModal(true)}
+            className="w-full py-4 bg-gradient-to-r from-[#060145] to-[#0a0280] text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 mb-4"
+        >
+            Apply Now
+        </motion.button>
+
+        <div className="mt-6 p-4 bg-gray-50 rounded-2xl text-sm space-y-2">
+            <div className="flex justify-between">
+                <span className="text-gray-600">Posted</span>
+                <span className="font-semibold text-[#060145]">{job.postedDate}</span>
+            </div>
+            <div className="flex justify-between">
+                <span className="text-gray-600">Applicants</span>
+                <span className="font-semibold text-[#060145]">{job.applicants}</span>
+            </div>
+        </div>
+    </motion.div>
+);
+
+const PerksCard = () => (
+    <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5 }}
+        className="bg-gradient-to-br from-[#F59C20] to-[#ffb340] rounded-3xl p-8 text-white shadow-xl w-full"
+    >
+        <h4 className="text-xl font-bold mb-4 flex items-center gap-2">
+            <Shield className="w-5 h-5" /> Why You'll Love It
+        </h4>
+        <ul className="space-y-3">
+            <li className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-white rounded-full" /> Competitive salary package
+            </li>
+            <li className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-white rounded-full" /> Flexible work arrangements
+            </li>
+            <li className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-white rounded-full" /> Career growth opportunities
+            </li>
+            <li className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-white rounded-full" /> Amazing team culture
+            </li>
+        </ul>
+    </motion.div>
+);
+
+export default JobDetail;

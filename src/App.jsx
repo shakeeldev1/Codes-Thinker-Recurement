@@ -1,8 +1,10 @@
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
-import './App.css'
+import './App.css';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import Home from './pages/Home';
+import Jobs from './pages/Jobs';
+import JobDetail from './pages/JobDetail';
 
 import AdminNavbar from './components/dashboard/common/AdminNavbar';
 import AdminSidebar from './components/dashboard/common/AdminSidebar';
@@ -17,7 +19,8 @@ const MainComponent = () => {
       <Footer />
     </div>
   );
-}
+};
+
 
 
 const AdminRoute=()=>{
@@ -34,11 +37,17 @@ const AdminRoute=()=>{
 
 const router = createBrowserRouter([
   {
-    path: '/', element: <MainComponent />, children: [
+    path: '/',
+    element: <MainComponent />,
+    children: [
       { path: '/', element: <Home /> },
-      
-    ]
+      { path: '/jobs', element: <Jobs /> },
+      { path: '/jobs/:id', element: <JobDetail /> },
+    ],
   },
+      
+
+  
   {
     element:<AdminRoute/>,
     children:[
@@ -55,4 +64,4 @@ function App() {
   return <RouterProvider router={router} />;
 }
 
-export default App
+export default App;

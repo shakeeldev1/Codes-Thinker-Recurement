@@ -3,9 +3,11 @@ import './App.css'
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 import Home from './pages/Home';
-import ChoosePath from './pages/ChoosePath';
-import StudentsAdmissionForm from './pages/StudentsAdmissionForm';
-import Jobs from './pages/Jobs';
+
+import AdminNavbar from './components/dashboard/common/AdminNavbar';
+import AdminSidebar from './components/dashboard/common/AdminSidebar';
+import Overview from './pages/dashboard/Overview';
+import JobsApplications from './pages/dashboard/JobsApplications';
 
 const MainComponent = () => {
   return (
@@ -17,14 +19,34 @@ const MainComponent = () => {
   );
 }
 
+
+const AdminRoute=()=>{
+  return (
+    <div>
+
+    <AdminNavbar/>
+    <AdminSidebar/>
+    <Outlet/>
+   
+    </div>
+  )
+}
+
 const router = createBrowserRouter([
   {
     path: '/', element: <MainComponent />, children: [
       { path: '/', element: <Home /> },
-      {path: "/choose-path",element: <ChoosePath />},
-      {path: "/jobs",element: <Jobs />},
       
-      {path: "/students-admission-form",element: <StudentsAdmissionForm/>},
+    ]
+  },
+  {
+    element:<AdminRoute/>,
+    children:[
+      {
+        path:"/overview",element:<Overview/>
+      },{
+        path:"/applications",element:<JobsApplications/>
+      }
     ]
   }
 ]);

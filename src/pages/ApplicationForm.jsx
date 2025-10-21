@@ -1,134 +1,311 @@
 import React, { useState } from "react";
-import { X, User, Mail, Phone, Linkedin, Github, Globe, FileText, Send } from "lucide-react";
+import { X, Upload, Calendar } from "lucide-react";
 
-const ApplicationForm = ({ job, onCancel, onSubmit }) => {
+const ApplicationForm = ({ onCancel, onSubmit }) => {
     const [formData, setFormData] = useState({
         fullName: "",
+        phoneNumber: "",
         email: "",
-        phone: "",
+        cityCountry: "",
+        jobTitle: "",
+        department: "",
+        address: "",
+        joiningDate: "",
+        cv: null,
+        coverLetter: null,
+        interest1: "",
         linkedin: "",
-        github: "",
-        portfolio: "",
-        coverLetter: "",
-        resume: null,
+        interest2: "",
+        agreement: false,
     });
+
+    const handleChange = (e) => {
+        const { name, value, type, checked, files } = e.target;
+        setFormData({
+            ...formData,
+            [name]: type === "checkbox" ? checked : type === "file" ? files[0] : value,
+        });
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit(formData);
+        onSubmit && onSubmit(formData);
     };
 
     return (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-[9999]">
+            <div className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
                 {/* Header */}
-                <div className="relative bg-gradient-to-r from-[#110C61] to-[#110C61] text-white p-8 overflow-hidden">
-                    <div className="absolute inset-0 bg-black/10"></div>
-                    <div className="relative z-10">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <h2 className="text-3xl font-bold">Apply for {job.title}</h2>
-                                <p className="text-white/80 mt-2 text-lg">{job.company}</p>
-                            </div>
-                            <button
-                                onClick={onCancel}
-                                className="text-white/80 hover:text-white transition-all duration-300 p-2 hover:bg-white/10 rounded-2xl"
-                            >
-                                <X className="w-6 h-6" />
-                            </button>
-                        </div>
+                <div className="relative bg-gradient-to-r from-[#0B055A] to-[#5A51D3] text-white p-6 rounded-t-3xl flex justify-between items-center">
+                    <div>
+                        <h2 className="text-2xl font-bold">Job Application Form</h2>
+                        <p className="text-sm text-white/80 mt-1">Please fill in all required fields</p>
                     </div>
+
+                    <button
+                        onClick={onCancel}
+                        aria-label="Close"
+                        className="p-2 hover:bg-white/10 rounded-full transition-all"
+                    >
+                        <X className="w-6 h-6" />
+                    </button>
                 </div>
 
                 {/* Form */}
                 <form onSubmit={handleSubmit} className="p-8 space-y-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {[
-                            { label: "Full Name *", icon: User, type: "text", key: "fullName", required: true },
-                            { label: "Email Address *", icon: Mail, type: "email", key: "email", required: true },
-                            { label: "Phone Number *", icon: Phone, type: "tel", key: "phone", required: true },
-                            { label: "LinkedIn Profile", icon: Linkedin, type: "url", key: "linkedin" },
-                            { label: "GitHub Profile", icon: Github, type: "url", key: "github" },
-                            { label: "Portfolio Website", icon: Globe, type: "url", key: "portfolio" },
-                        ].map(({ label, icon: Icon, type, key, required }) => (
-                            <div key={key}>
-                                <label className="block text-sm font-semibold text-gray-700 mb-3">
-                                    {label}
+                    {/* Personal Information */}
+                    <div>
+                        <h3 className="text-lg font-semibold mb-4">Personal Information</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
+                                    Full Name <span className="text-red-500">*</span>
                                 </label>
-                                <div className="relative">
-                                    <Icon className="w-5 h-5 text-gray-400 absolute left-4 top-1/2 transform -translate-y-1/2" />
-                                    <input
-                                        type={type}
-                                        required={required}
-                                        value={formData[key]}
-                                        onChange={(e) => setFormData({ ...formData, [key]: e.target.value })}
-                                        className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#110C61] focus:border-[#110C61] transition-all duration-200 bg-gray-50/50 hover:bg-white"
-                                        placeholder={`Enter your ${label.toLowerCase().replace(" *", "")}`}
-                                    />
-                                </div>
+                                <input
+                                    id="fullName"
+                                    name="fullName"
+                                    placeholder="Full Name"
+                                    className="border rounded-lg p-3 w-full bg-white"
+                                    onChange={handleChange}
+                                    value={formData.fullName}
+                                    required
+                                />
                             </div>
-                        ))}
-                    </div>
 
-                    {/* Cover Letter */}
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-3">
-                            Cover Letter *
-                        </label>
-                        <textarea
-                            required
-                            value={formData.coverLetter}
-                            onChange={(e) => setFormData({ ...formData, coverLetter: e.target.value })}
-                            rows="5"
-                            className="w-full px-4 py-4 border-2 border-gray-200 rounded-2xl focus:ring-2 focus:ring-[#110C61] focus:border-[#110C61] transition-all duration-200 bg-gray-50/50 hover:bg-white resize-none"
-                            placeholder="Tell us why you're interested in this position and what makes you a great fit..."
-                        />
-                    </div>
+                            <div>
+                                <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-2">
+                                    Phone Number <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                    id="phoneNumber"
+                                    name="phoneNumber"
+                                    placeholder="Phone Number"
+                                    className="border rounded-lg p-3 w-full bg-white"
+                                    onChange={handleChange}
+                                    value={formData.phoneNumber}
+                                    required
+                                />
+                            </div>
 
-                    {/* Resume Upload */}
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-3">
-                            Upload Resume *
-                        </label>
-                        <div className="border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center hover:border-[#110C61] transition-all duration-300 bg-gray-50/50 hover:bg-white group">
-                            <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4 group-hover:text-[#110C61] transition-colors duration-300" />
-                            <p className="text-gray-600 text-lg mb-2">Drop your resume here or click to browse</p>
-                            <p className="text-gray-500 text-sm mb-4">Supports: PDF, DOC, DOCX (Max: 5MB)</p>
+                            <div>
+                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                                    Email Address <span className="text-red-500">*</span>
+                                </label>
+                                <input
+                                    id="email"
+                                    type="email"
+                                    name="email"
+                                    placeholder="Email Address"
+                                    className="border rounded-lg p-3 w-full bg-white"
+                                    onChange={handleChange}
+                                    value={formData.email}
+                                    required
+                                />
+                            </div>
 
-                            <input
-                                type="file"
-                                required
-                                onChange={(e) => setFormData({ ...formData, resume: e.target.files[0] })}
-                                className="hidden"
-                                id="resume"
-                                accept=".pdf,.doc,.docx"
-                            />
-
-                            <label
-                                htmlFor="resume"
-                                className="inline-block px-8 py-3 bg-[#110C61] text-white rounded-2xl cursor-pointer hover:shadow-lg transition-all duration-300 font-semibold"
-                            >
-                                Choose File
-                            </label>
+                            <div>
+                                <label htmlFor="cityCountry" className="block text-sm font-medium text-gray-700 mb-2">
+                                    City/Country
+                                </label>
+                                <input
+                                    id="cityCountry"
+                                    name="cityCountry"
+                                    placeholder="City/Country"
+                                    className="border rounded-lg p-3 w-full bg-white"
+                                    onChange={handleChange}
+                                    value={formData.cityCountry}
+                                />
+                            </div>
                         </div>
                     </div>
 
-                    {/* Buttons */}
-                    <div className="flex gap-4 pt-6">
-                        <button
-                            type="button"
-                            onClick={onCancel}
-                            className="flex-1 px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-2xl font-semibold hover:bg-gray-50 hover:border-gray-400 transition-all duration-300"
-                        >
-                            Cancel
-                        </button>
+                    {/* Position Details */}
+                    <div>
+                        <h3 className="text-lg font-semibold mb-4">Position Details</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label htmlFor="jobTitle" className="block text-sm font-medium text-gray-700 mb-2">
+                                    Select Job & Internship Title
+                                </label>
+                                <select
+                                    id="jobTitle"
+                                    name="jobTitle"
+                                    className="border rounded-lg p-3 w-full bg-white"
+                                    onChange={handleChange}
+                                    value={formData.jobTitle}
+                                >
+                                    <option value="">Select Job & Internship Title</option>
+                                    <option value="Frontend Developer">Frontend Developer</option>
+                                    <option value="Backend Developer">Backend Developer</option>
+                                    <option value="AI Intern">AI Intern</option>
+                                </select>
+                            </div>
 
+                            <div>
+                                <label htmlFor="department" className="block text-sm font-medium text-gray-700 mb-2">
+                                    Preferred Department
+                                </label>
+                                <select
+                                    id="department"
+                                    name="department"
+                                    className="border rounded-lg p-3 w-full bg-white"
+                                    onChange={handleChange}
+                                    value={formData.department}
+                                >
+                                    <option value="">Preferred Department</option>
+                                    <option value="Engineering">Engineering</option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="Research">Research</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-2">
+                                    Address
+                                </label>
+                                <input
+                                    id="address"
+                                    name="address"
+                                    placeholder="Address"
+                                    className="border rounded-lg p-3 w-full bg-white"
+                                    onChange={handleChange}
+                                    value={formData.address}
+                                />
+                            </div>
+
+                            <div>
+                                <label htmlFor="joiningDate" className="block text-sm font-medium text-gray-700 mb-2">
+                                    Joining Date
+                                </label>
+                                <div className="relative">
+                                    <input
+                                        id="joiningDate"
+                                        name="joiningDate"
+                                        type="date"
+                                        className="border rounded-lg p-3 w-full bg-white"
+                                        onChange={handleChange}
+                                        value={formData.joiningDate}
+                                    />
+                                    <Calendar className="absolute right-3 top-3 w-5 h-5 text-gray-400 pointer-events-none" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Documents Upload */}
+                    <div>
+                        <h3 className="text-lg font-semibold mb-4">Documents Upload</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label htmlFor="cv" className="block text-sm font-medium text-gray-700 mb-2">
+                                    Upload CV/Resume
+                                </label>
+                                <div className="flex items-center gap-3 border rounded-lg p-3 bg-white">
+                                    <Upload className="text-gray-500 w-5 h-5" />
+                                    <input
+                                        id="cv"
+                                        type="file"
+                                        name="cv"
+                                        accept=".pdf,.doc,.docx"
+                                        onChange={handleChange}
+                                        className="w-full text-sm"
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <label htmlFor="coverLetter" className="block text-sm font-medium text-gray-700 mb-2">
+                                    Upload Cover Letter
+                                </label>
+                                <div className="flex items-center gap-3 border rounded-lg p-3 bg-white">
+                                    <Upload className="text-gray-500 w-5 h-5" />
+                                    <input
+                                        id="coverLetter"
+                                        type="file"
+                                        name="coverLetter"
+                                        accept=".pdf,.doc,.docx"
+                                        onChange={handleChange}
+                                        className="w-full text-sm"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Additional Info */}
+                    <div>
+                        <h3 className="text-lg font-semibold mb-4">Additional Info</h3>
+
+                        <div className="border rounded-lg p-4 bg-white space-y-4">
+                            <div>
+                                <label htmlFor="interest1" className="block text-sm font-medium text-gray-700 mb-2">
+                                    Why are you interested in this role?
+                                </label>
+                                <textarea
+                                    id="interest1"
+                                    name="interest1"
+                                    rows={3}
+                                    placeholder="Why are you interested in this role?"
+                                    className="w-full border rounded-md p-3 bg-white resize-none"
+                                    onChange={handleChange}
+                                    value={formData.interest1}
+                                />
+                            </div>
+
+                            <div>
+                                <label htmlFor="linkedin" className="block text-sm font-medium text-gray-700 mb-2">
+                                    LinkedIn Profile URL
+                                </label>
+                                <input
+                                    id="linkedin"
+                                    name="linkedin"
+                                    placeholder="LinkedIn Profile URL"
+                                    className="border rounded-lg p-3 w-full bg-white"
+                                    onChange={handleChange}
+                                    value={formData.linkedin}
+                                />
+                            </div>
+
+                            <div>
+                                <label htmlFor="interest2" className="block text-sm font-medium text-gray-700 mb-2">
+                                    GitHub Profile URL
+                                </label>
+                                <textarea
+                                    id="interest2"
+                                    name="interest2"
+                                    rows={3}
+                                    placeholder="Why are you interested in this role?"
+                                    className="w-full border rounded-md p-3 bg-white resize-none"
+                                    onChange={handleChange}
+                                    value={formData.interest2}
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Agreement */}
+                    <div className="flex items-start gap-3">
+                        <input
+                            id="agreement"
+                            type="checkbox"
+                            name="agreement"
+                            checked={formData.agreement}
+                            onChange={handleChange}
+                            className="w-5 h-5 accent-[#110C61] mt-1"
+                        />
+                        <label htmlFor="agreement" className="text-gray-700 text-sm">
+                            <span className="font-medium">Publishing Agreement</span>
+                            <div className="text-gray-500">I agree that my review can be published on the website.</div>
+                        </label>
+                    </div>
+
+                    {/* Submit Button */}
+                    <div className="pt-4">
                         <button
                             type="submit"
-                            className="flex-1 px-8 py-4 bg-[#110C61] text-white rounded-2xl font-semibold hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3 group"
+                            className="w-full bg-[#110C61] text-white py-4 rounded-2xl font-semibold hover:shadow-lg transition-all duration-300"
                         >
                             Submit Application
-                            <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                         </button>
                     </div>
                 </form>

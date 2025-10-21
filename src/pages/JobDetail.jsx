@@ -60,28 +60,26 @@ const JobDetail = () => {
         setShowModal(false);
     };
 
-    const handleSaveJob = () => {
-        setIsSaved(!isSaved);
-    };
+    const handleSaveJob = () => setIsSaved(!isSaved);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
-            {/* Background Elements */}
+        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 overflow-x-hidden">
+            {/* Gradient blobs */}
             <div className="fixed inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-20 left-10 w-72 h-72 bg-[#F59C20]/10 rounded-full blur-3xl" />
-                <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#060145]/10 rounded-full blur-3xl" />
+                <div className="absolute top-20 left-10 w-60 h-60 bg-[#F59C20]/20 rounded-full blur-3xl" />
+                <div className="absolute bottom-20 right-10 w-80 h-80 bg-[#060145]/20 rounded-full blur-3xl" />
             </div>
 
-            <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-10">
+            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-10">
                 {/* Header */}
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center justify-between mb-8"
+                    className="flex flex-wrap justify-between items-center gap-4 mb-10"
                 >
                     <button
                         onClick={() => navigate(-1)}
-                        className="group flex items-center gap-3 px-6 py-3 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl border border-white/20 hover:border-[#F59C20]/30 transition-all duration-300"
+                        className="group flex items-center gap-3 px-5 py-3 bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg hover:shadow-xl border border-white/20 hover:border-[#F59C20]/30 transition-all duration-300"
                     >
                         <ArrowLeft className="w-5 h-5 text-[#060145] group-hover:text-[#F59C20]" />
                         <span className="font-semibold text-[#060145] group-hover:text-[#F59C20]">
@@ -94,16 +92,16 @@ const JobDetail = () => {
                         whileTap={{ scale: 0.95 }}
                         onClick={handleSaveJob}
                         className={`p-3 rounded-2xl backdrop-blur-sm border transition-all duration-300 ${isSaved
-                                ? "bg-[#F59C20]/20 border-[#F59C20] text-[#F59C20] shadow-lg"
-                                : "bg-white/80 border-white/20 text-[#060145] hover:border-[#F59C20]/30"
+                            ? "bg-[#F59C20]/20 border-[#F59C20] text-[#F59C20] shadow-lg"
+                            : "bg-white/80 border-white/20 text-[#060145] hover:border-[#F59C20]/30"
                             }`}
                     >
                         <Heart className={`w-6 h-6 ${isSaved ? "fill-current" : ""}`} />
                     </motion.button>
                 </motion.div>
 
-                {/* Main Content Grid */}
-                <div className="grid lg:grid-cols-3 gap-6 lg:gap-10 max-w-[1300px] mx-auto">
+                {/* Content Grid */}
+                <div className="grid lg:grid-cols-3 gap-6 lg:gap-10">
                     {/* Left Column */}
                     <div className="lg:col-span-2 space-y-8">
                         {/* Hero Section */}
@@ -111,12 +109,10 @@ const JobDetail = () => {
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
-                            className="relative bg-gradient-to-br from-[#060145] to-[#0a0280] rounded-3xl p-10 text-white shadow-2xl overflow-hidden w-full"
+                            className="relative bg-gradient-to-br from-[#060145] to-[#0a0280] rounded-3xl p-8 sm:p-10 text-white shadow-2xl overflow-hidden"
                         >
-                            <div className="absolute inset-0" />
-
                             <div className="relative z-10">
-                                <div className="flex items-start justify-between mb-6">
+                                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-6 gap-4">
                                     <div className="flex items-center gap-4">
                                         <div className="p-4 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/20">
                                             {job.icon && typeof job.icon !== "string" ? (
@@ -126,13 +122,16 @@ const JobDetail = () => {
                                             )}
                                         </div>
                                         <div>
-                                            <h1 className="text-4xl font-bold mb-2">{job.title}</h1>
-                                            <p className="text-xl text-white/80 flex items-center gap-2">
+                                            <h1 className="text-2xl sm:text-4xl font-bold mb-2">
+                                                {job.title}
+                                            </h1>
+                                            <p className="text-lg sm:text-xl text-white/80 flex items-center gap-2">
                                                 <Building className="w-5 h-5" />
                                                 {job.company}
                                             </p>
                                         </div>
                                     </div>
+
                                     {job.featured && (
                                         <div className="flex items-center gap-2 px-4 py-2 bg-[#F59C20] text-[#060145] rounded-full font-bold">
                                             <Star className="w-4 h-4 fill-current" /> Featured
@@ -140,22 +139,26 @@ const JobDetail = () => {
                                     )}
                                 </div>
 
-                                <p className="text-lg text-white/90 leading-relaxed mb-8">
+                                <p className="text-base sm:text-lg text-white/90 leading-relaxed mb-8">
                                     {job.description}
                                 </p>
 
                                 {/* Stats */}
-                                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                                     <Stat icon={<Clock />} label="Type" value={job.type} />
                                     <Stat icon={<MapPin />} label="Location" value={job.location} />
                                     <Stat icon={<DollarSign />} label="Salary" value={job.salary} />
-                                    <Stat icon={<TrendingUp />} label="Experience" value={job.experience} />
+                                    <Stat
+                                        icon={<TrendingUp />}
+                                        label="Experience"
+                                        value={job.experience}
+                                    />
                                 </div>
                             </div>
                         </motion.div>
 
                         {/* Role & Requirements */}
-                        <div className="flex w-[810px] gap-3">
+                        <div className="flex flex-col sm:flex-row w-full max-w-[900px] mx-auto px-2 py-5 gap-5 sm:gap-6 md:gap-8 justify-center">
                             <DetailsCard
                                 title="Your Role"
                                 icon={<Users className="text-[#060145]" />}
@@ -169,15 +172,12 @@ const JobDetail = () => {
                                 items={job.requirements}
                             />
                         </div>
+
                     </div>
 
                     {/* Right Column */}
-                    <div className="space-y-6">
-                        <ApplyCard
-                            job={job}
-                            setShowModal={setShowModal}
-                            handleSaveJob={handleSaveJob}
-                        />
+                    <div className="space-y-6 lg:sticky lg:top-8">
+                        <ApplyCard job={job} setShowModal={setShowModal} />
                         <PerksCard />
                     </div>
                 </div>
@@ -194,9 +194,9 @@ const JobDetail = () => {
     );
 };
 
-// Small Components
+// Subcomponents
 const Stat = ({ icon, label, value }) => (
-    <div className="text-center p-4 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/20">
+    <div className="text-center p-4 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all">
         <div className="w-6 h-6 mx-auto mb-2 text-[#F59C20]">{icon}</div>
         <div className="text-sm text-white/80">{label}</div>
         <div className="font-semibold">{value}</div>
@@ -205,14 +205,15 @@ const Stat = ({ icon, label, value }) => (
 
 const DetailsCard = ({ title, icon, color, items }) => (
     <motion.div
-        initial={{ opacity: 0, x: -30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.2 }}
-        className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 hover:border-[#F59C20]/30 transition-all duration-300 w-full"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+        className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 hover:border-[#F59C20]/30 transition-all duration-300"
     >
         <div className="flex items-center gap-3 mb-6">
             <div className={`p-3 bg-${color}/10 rounded-xl`}>{icon}</div>
-            <h3 className="text-2xl font-bold text-[#060145]">{title}</h3>
+            <h3 className="text-xl sm:text-2xl font-bold text-[#060145]">{title}</h3>
         </div>
         <ul className="space-y-4">
             {items.map((item, i) => (
@@ -221,7 +222,9 @@ const DetailsCard = ({ title, icon, color, items }) => (
                     className="flex items-start gap-4 p-3 rounded-xl hover:bg-[#F59C20]/5 transition-colors"
                 >
                     <div className="w-2 h-2 bg-[#F59C20] rounded-full mt-2 flex-shrink-0" />
-                    <span className="text-gray-700 leading-relaxed">{item}</span>
+                    <span className="text-gray-700 leading-relaxed text-sm sm:text-base">
+                        {item}
+                    </span>
                 </li>
             ))}
         </ul>
@@ -233,7 +236,7 @@ const ApplyCard = ({ job, setShowModal }) => (
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 sticky top-8 w-full"
+        className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100"
     >
         <div className="text-center mb-6">
             <div className="w-16 h-16 mx-auto mb-4 bg-[#110c61] rounded-2xl flex items-center justify-center">
@@ -244,7 +247,7 @@ const ApplyCard = ({ job, setShowModal }) => (
         </div>
 
         <motion.button
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setShowModal(true)}
             className="w-full py-4 bg-gradient-to-r from-[#060145] to-[#0a0280] text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 mb-4"
@@ -265,31 +268,20 @@ const ApplyCard = ({ job, setShowModal }) => (
     </motion.div>
 );
 
-const PerksCard = () => (
-    <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-        className="bg-gradient-to-br from-[#F59C20] to-[#ffb340] rounded-3xl p-8 text-white shadow-xl w-full"
-    >
-        <h4 className="text-xl font-bold mb-4 flex items-center gap-2">
-            <Shield className="w-5 h-5" /> Why You'll Love It
-        </h4>
-        <ul className="space-y-3">
-            <li className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-white rounded-full" /> Competitive salary package
-            </li>
-            <li className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-white rounded-full" /> Flexible work arrangements
-            </li>
-            <li className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-white rounded-full" /> Career growth opportunities
-            </li>
-            <li className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-white rounded-full" /> Amazing team culture
-            </li>
-        </ul>
-    </motion.div>
-);
-
+const PerksCard = () =>
+(<motion.div initial={{ opacity: 0, y: 30 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay: 0.5 }}
+    className="bg-gradient-to-br from-[#F59C20] to-[#ffb340] rounded-3xl p-8 text-white shadow-xl w-full" >
+    <h4 className="text-xl font-bold mb-4 flex items-center gap-2"> <Shield className="w-5 h-5" /> Why You'll Love It </h4>
+    <ul className="space-y-3">
+        <li className="flex items-center gap-3">
+            <div className="w-2 h-2 bg-white rounded-full" /> Competitive salary package </li>
+        <li className="flex items-center gap-3">
+            <div className="w-2 h-2 bg-white rounded-full" /> Flexible work arrangements </li>
+        <li className="flex items-center gap-3">
+            <div className="w-2 h-2 bg-white rounded-full" /> Career growth opportunities </li>
+        <li className="flex items-center gap-3">
+            <div className="w-2 h-2 bg-white rounded-full" /> Amazing team culture </li>
+    </ul> </motion.div>);
 export default JobDetail;

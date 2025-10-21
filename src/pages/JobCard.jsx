@@ -8,96 +8,72 @@ import {
     Users,
     Globe,
     Bookmark,
-    Share2,
+
 } from "lucide-react";
 import { motion } from "framer-motion";
 
 const JobCard = ({ job, onClick }) => {
-    const [isBookmarked, setIsBookmarked] = useState(false);
 
-    const handleBookmark = (e) => {
-        e.stopPropagation();
-        setIsBookmarked(!isBookmarked);
-    };
 
-    const handleShare = (e) => {
-        e.stopPropagation();
-        console.log("Share job:", job.id);
-    };
 
     return (
         <motion.div
             onClick={() => onClick(job)}
-            initial={{ opacity: 0, scale: 0.9, y: 50 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
+            initial={{ opacity: 0, y: 50, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
             whileHover={{
                 scale: 1.03,
-                boxShadow: "0 15px 25px rgba(0,0,0,0.1)",
-                transition: { duration: 0.3 },
+                boxShadow: "0 20px 30px rgba(0,0,0,0.12)",
             }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="bg-white rounded-2xl shadow-lg hover:shadow-2xl border border-transparent hover:border-[#F59C20] transition-all duration-300 cursor-pointer flex flex-col h-full overflow-hidden"
+            whileTap={{ scale: 0.97 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="bg-white rounded-2xl shadow-lg shadow-amber-200  hover:border-[#F59C20]
+      transition-all duration-300 cursor-pointer flex flex-col justify-between overflow-hidden 
+      min-h-[500px] w-full max-w-[370px] sm:max-w-[400px] md:max-w-[430px] border-2 border-[#060145]"
         >
-            {/* Gradient Header */}
-            <div className="bg-gradient-to-r from-[#060145] via-[#060145] to-[#F59C20] text-white px-2.5 py-4 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-
-                    <div className="w-[310px]">
-                        <h3 className="text-2xl font-bold leading-tight">{job.title}</h3>
-                        <p className="text-sm opacity-90 flex items-center gap-1">
-                            {job.company}
-                        </p>
+            {/* Header */}
+            <div className="bg-gradient-to-r from-[#060145] via-[#060145] to-[#F59C20] text-white px-4 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3 w-full">
+                    <div className="w-full">
+                        <h3 className="text-xl sm:text-2xl font-bold leading-tight break-words truncate">
+                            {job.title}
+                        </h3>
+                        <p className="text-sm opacity-90">{job.company}</p>
                     </div>
                 </div>
 
-                <div className="flex gap-2">
-                    <button
-                        onClick={handleBookmark}
-                        className="p-2 hover:bg-white/10 rounded-full transition"
-                    >
-                        <Bookmark
-                            className={`w-5 h-5 ${isBookmarked
-                                ? "fill-gray-300 text-gray-300"
-                                : "text-gray-200"
-                                }`}
-                        />
-                    </button>
-                    <button
-                        onClick={handleShare}
-                        className="p-2 hover:bg-white/10 rounded-full transition"
-                    >
-                        <Share2 className="w-5 h-5 text-gray-200" />
-                    </button>
-                </div>
+
             </div>
 
-            {/* Description */}
-            <div className="p-5 flex-grow">
-                <p className="text-gray-700 text-sm leading-relaxed mb-4 line-clamp-3">
-                    {job.description}
-                </p>
+            {/* Description & Info */}
+            <div className="p-5 flex-grow flex flex-col justify-between">
+                <div>
+                    <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-4 line-clamp-2 min-h-[48px]">
+                        {job.description}
+                    </p>
 
-                {/* Job Info Grid */}
-                <div className="grid grid-cols-2 gap-3 mb-5">
-                    <Info icon={<Type className="text-gray-600" />} label={job.type} />
-                    <Info icon={<Award className="text-gray-600" />} label={job.experience} />
-                    <Info icon={<MapPin className="text-gray-600" />} label={job.location} />
-                    <Info icon={<DollarSign className="text-gray-600" />} label={job.salary} />
+                    <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 gap-3 mb-5">
+                        <Info icon={<Type />} label={job.type} />
+                        <Info icon={<Award />} label={job.experience} />
+                        <Info icon={<MapPin />} label={job.location} />
+                        <Info icon={<DollarSign />} label={job.salary} />
+                    </div>
                 </div>
 
-                {/* Skills */}
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 mt-auto">
                     {job.skills.slice(0, 3).map((skill, i) => (
-                        <span
+                        <motion.span
                             key={i}
-                            className="px-3 py-1 bg-[#060145]/10 text-[#060145] text-xs font-medium rounded-md"
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: i * 0.1 }}
+                            className="px-3 py-1 bg-[#060145]/10 text-[#060145] text-xs sm:text-sm font-medium rounded-md"
                         >
                             {skill}
-                        </span>
+                        </motion.span>
                     ))}
                     {job.skills.length > 3 && (
-                        <span className="px-3 py-1 bg-[#F59C20]/10 text-[#F59C20] text-xs font-medium rounded-md">
+                        <span className="px-3 py-1 bg-[#F59C20]/10 text-[#F59C20] text-xs sm:text-sm font-medium rounded-md">
                             +{job.skills.length - 3}
                         </span>
                     )}
@@ -105,20 +81,20 @@ const JobCard = ({ job, onClick }) => {
             </div>
 
             {/* Footer */}
-            <div className="px-5 py-4 bg-[#060145] flex items-center justify-between text-xs text-gray-600">
-                <div className="flex items-center gap-3">
+            <div className="px-5 py-3 bg-[#060145] flex flex-col sm:flex-row sm:items-center justify-between text-xs sm:text-sm gap-2 text-gray-600">
+                <div className="flex flex-wrap items-center gap-3 text-white">
                     <div className="flex items-center gap-1">
                         <Calendar className="w-4 h-4 text-gray-300" />
-                        <span className="text-white">{job.postedDate}</span>
+                        <span>{job.postedDate}</span>
                     </div>
                     <div className="flex items-center gap-1">
                         <Users className="w-4 h-4 text-gray-300" />
-                        <span className="text-white">{job.applicants} applicants</span>
+                        <span>{job.applicants} applicants</span>
                     </div>
                 </div>
 
                 {job.remote && (
-                    <div className="flex items-center gap-1 px-2 py-1 bg-[#F59C20] text-[#060145] text-xs font-semibold rounded-md">
+                    <div className="flex items-center gap-1 px-2 py-1 bg-[#F59C20] text-[#060145] text-xs sm:text-sm font-semibold rounded-md self-start sm:self-auto">
                         <Globe className="w-3 h-3 text-gray-800" />
                         Remote
                     </div>
@@ -127,16 +103,18 @@ const JobCard = ({ job, onClick }) => {
 
             {/* Apply Button */}
             <motion.div
-                whileHover={{ scale: 1.02 }}
+                whileHover={{ scale: 1.01 }}
                 transition={{ duration: 0.3 }}
-                className="p-5 bg-[#060145]"
+                className="p-4 bg-[#060145]"
             >
                 <button
                     onClick={(e) => {
                         e.stopPropagation();
                         onClick(job);
                     }}
-                    className="w-full py-2.5 bg-[#F59C20] text-[#060145] font-semibold rounded-lg hover:bg-[#060145] hover:text-[#F59C20] border border-[#F59C20] transition-all duration-300"
+                    className="w-full py-2.5 bg-[#F59C20] text-[#060145] font-semibold rounded-lg 
+          hover:bg-[#060145] hover:text-[#F59C20] border border-[#F59C20] 
+          transition-all duration-300 text-sm sm:text-base"
                 >
                     Apply Now
                 </button>
@@ -146,9 +124,9 @@ const JobCard = ({ job, onClick }) => {
 };
 
 const Info = ({ icon, label }) => (
-    <div className="flex items-center gap-2 text-sm text-gray-700">
-        <span className="text-gray-600 w-4 h-4">{icon}</span>
-        <span>{label}</span>
+    <div className="flex items-center gap-2 text-sm sm:text-base text-gray-700">
+        <span className="text-gray-600 w-4 h-4 flex-shrink-0">{icon}</span>
+        <span className="truncate">{label}</span>
     </div>
 );
 

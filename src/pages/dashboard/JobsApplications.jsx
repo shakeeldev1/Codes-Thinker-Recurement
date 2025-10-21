@@ -5,6 +5,7 @@ import DeleteModal from "../../components/dashboard/JobApplications/DeleteModal"
 import EditModal from "../../components/dashboard/JobApplications/EditModal";
 import ViewModal from "../../components/dashboard/JobApplications/ViewModal";
 import JobApplicationsTable from "../../components/dashboard/JobApplications/JobApplicationsTable";
+import AddModal from "../../components/dashboard/JobApplications/AddModal";
 
 const initialData = [
   {
@@ -65,6 +66,7 @@ export default function JobsApplications() {
   const [viewing, setViewing] = useState(null);
   const [editing, setEditing] = useState(null);
   const [showConfirmDelete, setShowConfirmDelete] = useState(null);
+  const [showAddModal, setShowAddModal] = useState(false); // ✅ NEW
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
@@ -102,6 +104,11 @@ export default function JobsApplications() {
     setEditing(null);
   };
 
+  const handleAdd = (newApp) => {
+    setData((prev) => [...prev, newApp]);
+    setShowAddModal(false);
+  };
+
   return (
     <div className="p-8 bg-gray-50 min-h-screen lg:ml-64 mt-15">
       <div className="max-w-7xl mx-auto">
@@ -110,53 +117,63 @@ export default function JobsApplications() {
         </h1>
 
         <div className="bg-white rounded-2xl border border-gray-100 shadow-lg p-6">
-          {/* Filters */}
-          <div className="flex flex-wrap items-end gap-6 mb-6">
-            <div>
-              <label className="block text-xs font-semibold text-gray-500 mb-1">
-                Status
-              </label>
-              <select
-                className="border rounded-lg px-3 py-2 text-sm"
-                value={filterType}
-                onChange={(e) => setFilterType(e.target.value)}
-              >
-                <option value="All">All Statuses</option>
-                <option value="Pending">Pending</option>
-                <option value="Approved">Approved</option>
-                <option value="Rejected">Rejected</option>
-              </select>
-            </div>
+          {/* Filters + Add Button */}
+          <div className="flex flex-wrap items-end justify-between gap-6 mb-6">
+            <div className="flex flex-wrap items-end gap-6">
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 mb-1">
+                  Status
+                </label>
+                <select
+                  className="border rounded-lg px-3 py-2 text-sm"
+                  value={filterType}
+                  onChange={(e) => setFilterType(e.target.value)}
+                >
+                  <option value="All">All Status</option>
+                  <option value="Pending">Pending</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+              </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-gray-500 mb-1">
-                Type
-              </label>
-              <select
-                className="border rounded-lg px-3 py-2 text-sm"
-                value={jobType}
-                onChange={(e) => setJobType(e.target.value)}
-              >
-                <option value="All">All Types</option>
-                <option value="Job">Job</option>
-                <option value="Internship">Internship</option>
-              </select>
-            </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 mb-1">
+                  Type
+                </label>
+                <select
+                  className="border rounded-lg px-3 py-2 text-sm"
+                  value={jobType}
+                  onChange={(e) => setJobType(e.target.value)}
+                >
+                  <option value="All">All Types</option>
+                  <option value="Job">Job</option>
+                  <option value="Internship">Internship</option>
+                </select>
+              </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-gray-500 mb-1">
-                Search
-              </label>
-              <div className="relative">
-                <Search className="w-4 h-4 absolute left-3 top-3 text-gray-400" />
-                <input
-                  className="border rounded-lg pl-10 pr-3 py-2 text-sm w-64"
-                  placeholder="Search applicants..."
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                />
+              <div>
+                <label className="block text-xs font-semibold text-gray-500 mb-1">
+                  Search
+                </label>
+                <div className="relative">
+                  <Search className="w-4 h-4 absolute left-3 top-3 text-gray-400" />
+                  <input
+                    className="border rounded-lg pl-10 pr-3 py-2 text-sm w-64"
+                    placeholder="Search applicants..."
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                  />
+                </div>
               </div>
             </div>
+
+            {/* ➕ Add New Button */}
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="bg-[#080156] text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-[#0b037a] transition"
+            >
+              + New Application
+            </button>
           </div>
 
           {/* Table */}
@@ -210,6 +227,9 @@ export default function JobsApplications() {
           onClose={() => setShowConfirmDelete(null)}
           onConfirm={() => handleDelete(showConfirmDelete)}
         />
+      )}
+      {showAddModal && (
+        <AddModal onClose={() => setShowAddModal(false)} onAdd={handleAdd} />
       )}
     </div>
   );

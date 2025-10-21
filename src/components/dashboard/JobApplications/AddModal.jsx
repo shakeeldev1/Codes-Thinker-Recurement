@@ -53,12 +53,15 @@ export default function AddModal({ onClose, onAdd }) {
     onClose();
   };
 
+  const inputClass =
+    "mt-1 border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[#080156] focus:outline-none";
+
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl p-8 overflow-y-auto max-h-[90vh] border-t-4 border-[#080156]">
+    <div className="fixed inset-0 bg-black/50 flex justify-center items-center z-50 px-4">
+      <div className="bg-white/95 rounded-2xl shadow-2xl w-full max-w-4xl p-5 sm:p-7 overflow-y-auto max-h-[90vh] border-t-4 border-[#080156] animate-fadeIn">
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-semibold text-[#080156]">
+          <h2 className="text-xl sm:text-2xl font-semibold text-[#080156]">
             Add New Job Post
           </h2>
           <button
@@ -70,36 +73,34 @@ export default function AddModal({ onClose, onAdd }) {
         </div>
 
         {/* Form */}
-        <div className="grid grid-cols-2 gap-5">
-        {/* Job Title & Company in one row */}
-<div className="col-span-2 grid grid-cols-2 gap-5">
-  <div>
-    <label className="text-sm font-medium text-gray-700">
-      Job Title
-    </label>
-    <input
-      name="title"
-      placeholder="e.g. Front-End Developer"
-      value={formData.title}
-      onChange={handleChange}
-      className="mt-1 border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[#080156] focus:outline-none"
-    />
-  </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          {/* Job Title */}
+          <div>
+            <label className="text-sm font-medium text-gray-700">
+              Job Title
+            </label>
+            <input
+              name="title"
+              placeholder="e.g. Front-End Developer"
+              value={formData.title}
+              onChange={handleChange}
+              className={inputClass}
+            />
+          </div>
 
-  <div>
-    <label className="text-sm font-medium text-gray-700">
-      Company Name
-    </label>
-    <input
-      name="company"
-      placeholder="e.g. OpenAI"
-      value={formData.company}
-      onChange={handleChange}
-      className="mt-1 border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[#080156]"
-    />
-  </div>
-</div>
-
+          {/* Company */}
+          <div>
+            <label className="text-sm font-medium text-gray-700">
+              Company Name
+            </label>
+            <input
+              name="company"
+              placeholder="e.g. OpenAI"
+              value={formData.company}
+              onChange={handleChange}
+              className={inputClass}
+            />
+          </div>
 
           {/* Type */}
           <div>
@@ -110,7 +111,7 @@ export default function AddModal({ onClose, onAdd }) {
               name="type"
               value={formData.type}
               onChange={handleChange}
-              className="mt-1 border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[#080156]"
+              className={inputClass}
             >
               <option>Full-time</option>
               <option>Part-time</option>
@@ -128,7 +129,7 @@ export default function AddModal({ onClose, onAdd }) {
               name="department"
               value={formData.department}
               onChange={handleChange}
-              className="mt-1 border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[#080156]"
+              className={inputClass}
             >
               <option>Engineering</option>
               <option>Design</option>
@@ -148,7 +149,7 @@ export default function AddModal({ onClose, onAdd }) {
               name="level"
               value={formData.level}
               onChange={handleChange}
-              className="mt-1 border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[#080156]"
+              className={inputClass}
             >
               <option>Entry Level</option>
               <option>Mid Level</option>
@@ -167,42 +168,40 @@ export default function AddModal({ onClose, onAdd }) {
               placeholder="e.g. 2-4 Years"
               value={formData.experience}
               onChange={handleChange}
-              className="mt-1 border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[#080156]"
+              className={inputClass}
             />
           </div>
 
-         {/* Location & Salary in one row */}
-<div className="col-span-2 grid grid-cols-2 gap-5">
-  <div>
-    <label className="text-sm font-medium text-gray-700">
-      Location
-    </label>
-    <input
-      name="location"
-      placeholder="e.g. Lahore, Pakistan"
-      value={formData.location}
-      onChange={handleChange}
-      className="mt-1 border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[#080156]"
-    />
-  </div>
+          {/* Location */}
+          <div>
+            <label className="text-sm font-medium text-gray-700">
+              Location
+            </label>
+            <input
+              name="location"
+              placeholder="e.g. Lahore, Pakistan"
+              value={formData.location}
+              onChange={handleChange}
+              className={inputClass}
+            />
+          </div>
 
-  <div>
-    <label className="text-sm font-medium text-gray-700">
-      Salary Range
-    </label>
-    <input
-      name="salary"
-      placeholder="e.g. PKR 60,000 – 100,000"
-      value={formData.salary}
-      onChange={handleChange}
-      className="mt-1 border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[#080156]"
-    />
-  </div>
-</div>
-
+          {/* Salary */}
+          <div>
+            <label className="text-sm font-medium text-gray-700">
+              Salary Range
+            </label>
+            <input
+              name="salary"
+              placeholder="e.g. PKR 60,000 – 100,000"
+              value={formData.salary}
+              onChange={handleChange}
+              className={inputClass}
+            />
+          </div>
 
           {/* Description */}
-          <div className="col-span-2">
+          <div className="sm:col-span-2">
             <label className="text-sm font-medium text-gray-700">
               Job Description
             </label>
@@ -211,12 +210,12 @@ export default function AddModal({ onClose, onAdd }) {
               placeholder="Describe the job role and purpose..."
               value={formData.description}
               onChange={handleChange}
-              className="mt-1 border border-gray-300 rounded-lg px-3 py-2 w-full h-24 focus:ring-2 focus:ring-[#080156]"
+              className={`${inputClass} h-24`}
             />
           </div>
 
           {/* Responsibilities */}
-          <div className="col-span-2">
+          <div className="sm:col-span-2">
             <label className="text-sm font-medium text-gray-700">
               Responsibilities (comma-separated)
             </label>
@@ -225,12 +224,12 @@ export default function AddModal({ onClose, onAdd }) {
               placeholder="e.g. Write clean code, Manage deployments"
               value={formData.responsibilities}
               onChange={handleChange}
-              className="mt-1 border border-gray-300 rounded-lg px-3 py-2 w-full h-20 focus:ring-2 focus:ring-[#080156]"
+              className={`${inputClass} h-20`}
             />
           </div>
 
           {/* Requirements */}
-          <div className="col-span-2">
+          <div className="sm:col-span-2">
             <label className="text-sm font-medium text-gray-700">
               Requirements (comma-separated)
             </label>
@@ -239,12 +238,12 @@ export default function AddModal({ onClose, onAdd }) {
               placeholder="e.g. Bachelor's in CS, 2+ years experience"
               value={formData.requirements}
               onChange={handleChange}
-              className="mt-1 border border-gray-300 rounded-lg px-3 py-2 w-full h-20 focus:ring-2 focus:ring-[#080156]"
+              className={`${inputClass} h-20`}
             />
           </div>
 
           {/* Skills */}
-          <div className="col-span-2">
+          <div className="sm:col-span-2">
             <label className="text-sm font-medium text-gray-700">
               Skills (comma-separated)
             </label>
@@ -253,24 +252,22 @@ export default function AddModal({ onClose, onAdd }) {
               placeholder="e.g. React, Tailwind, Node.js"
               value={formData.skills}
               onChange={handleChange}
-              className="mt-1 border border-gray-300 rounded-lg px-3 py-2 w-full focus:ring-2 focus:ring-[#080156]"
+              className={inputClass}
             />
           </div>
-
-         
         </div>
 
         {/* Footer */}
-        <div className="mt-8 flex justify-end gap-3">
+        <div className="mt-8 flex flex-col sm:flex-row justify-end gap-3">
           <button
             onClick={onClose}
-            className="px-5 py-2 rounded-lg border text-gray-700 hover:bg-gray-100 transition"
+            className="px-5 py-2 rounded-lg border text-gray-700 hover:bg-gray-100 transition w-full sm:w-auto"
           >
             Cancel
           </button>
           <button
             onClick={handleSubmit}
-            className="bg-[#080156] hover:bg-[#0a038a] text-white px-5 py-2 rounded-lg font-medium transition"
+            className="bg-[#080156] hover:bg-[#0a038a] text-white px-5 py-2 rounded-lg font-medium transition w-full sm:w-auto"
           >
             Add Job
           </button>

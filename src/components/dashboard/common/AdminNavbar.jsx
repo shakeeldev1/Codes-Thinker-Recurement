@@ -14,12 +14,7 @@ const AdminNavbar = ({ onMenuClick }) => {
   return (
     <header className="fixed top-0 left-0 lg:left-64 right-0 z-50 h-16 bg-[#080156] shadow-lg flex items-center justify-between px-4 sm:px-6 md:px-8 border-b border-[#f59c22]/40">
       {/* Left Section: Mobile Menu */}
-      <button
-        className="lg:hidden text-white/90 hover:text-white transition-all"
-        onClick={onMenuClick}
-      >
-        <Menu size={24} />
-      </button>
+     
 
       {/* Right Section */}
       <div className="flex items-center gap-4 sm:gap-6 md:gap-8 ml-auto relative">

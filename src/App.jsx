@@ -10,6 +10,7 @@ import AdminNavbar from './components/dashboard/common/AdminNavbar';
 import AdminSidebar from './components/dashboard/common/AdminSidebar';
 import Overview from './pages/dashboard/Overview';
 import JobsApplications from './pages/dashboard/JobsApplications';
+import InterviewPage from './pages/dashboard/InterviewPage';
 
 const MainComponent = () => {
   return (
@@ -55,6 +56,8 @@ const router = createBrowserRouter([
         path:"/overview",element:<Overview/>
       },{
         path:"/applications",element:<JobsApplications/>
+      },{
+        path:"/interviews",element:<InterviewPage/>
       }
     ]
   }

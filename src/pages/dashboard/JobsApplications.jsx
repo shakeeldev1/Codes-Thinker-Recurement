@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight, XCircle } from "lucide-react";
 
 import DeleteModal from "../../components/dashboard/JobApplications/DeleteModal";
 import EditModal from "../../components/dashboard/JobApplications/EditModal";
@@ -66,12 +66,18 @@ export default function JobsApplications() {
   const [viewing, setViewing] = useState(null);
   const [editing, setEditing] = useState(null);
   const [showConfirmDelete, setShowConfirmDelete] = useState(null);
-  const [showAddModal, setShowAddModal] = useState(false); // ✅ NEW
-
+  const [showAddModal, setShowAddModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+
   const itemsPerPage = 20;
 
-  // Filtering logic
+  const handleClearFilters = () => {
+    setQuery("");
+    setFilterType("All");
+    setJobType("All");
+    setCurrentPage(1);
+  };
+
   const filteredResults = useMemo(() => {
     return data.filter((row) => {
       const matchesQuery =
@@ -91,7 +97,6 @@ export default function JobsApplications() {
     currentPage * itemsPerPage
   );
 
-  // Handlers
   const handleDelete = (id) => {
     setData((d) => d.filter((r) => r.id !== id));
     setShowConfirmDelete(null);
@@ -110,22 +115,24 @@ export default function JobsApplications() {
   };
 
   return (
-    <div className="p-8 bg-gray-50 min-h-screen lg:ml-64 mt-15">
+    <div className="p-4 sm:p-6 md:p-8 bg-gray-50 min-h-screen lg:ml-64 mt-15">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6 text-[#080156]">
+        {/* Page Title */}
+        <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-[#080156] text-left">
           Jobs & Internship Applications
         </h1>
 
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-lg p-6">
-          {/* Filters + Add Button */}
-          <div className="flex flex-wrap items-end justify-between gap-6 mb-6">
-            <div className="flex flex-wrap items-end gap-6">
-              <div>
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-lg p-4 sm:p-6">
+          {/* Filters + Buttons */}
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 lg:gap-6 mb-6">
+            <div className="flex flex-wrap gap-4 lg:gap-6">
+              {/* Status Filter */}
+              <div className="w-full sm:w-auto">
                 <label className="block text-xs font-semibold text-gray-500 mb-1">
                   Status
                 </label>
                 <select
-                  className="border rounded-lg px-3 py-2 text-sm"
+                  className="border rounded-lg px-3 py-2 text-sm w-full sm:w-40"
                   value={filterType}
                   onChange={(e) => setFilterType(e.target.value)}
                 >
@@ -136,12 +143,13 @@ export default function JobsApplications() {
                 </select>
               </div>
 
-              <div>
+              {/* Type Filter */}
+              <div className="w-full sm:w-auto">
                 <label className="block text-xs font-semibold text-gray-500 mb-1">
                   Type
                 </label>
                 <select
-                  className="border rounded-lg px-3 py-2 text-sm"
+                  className="border rounded-lg px-3 py-2 text-sm w-full sm:w-40"
                   value={jobType}
                   onChange={(e) => setJobType(e.target.value)}
                 >
@@ -151,42 +159,55 @@ export default function JobsApplications() {
                 </select>
               </div>
 
-              <div>
+              {/* Search */}
+              <div className="w-full sm:w-auto">
                 <label className="block text-xs font-semibold text-gray-500 mb-1">
                   Search
                 </label>
                 <div className="relative">
                   <Search className="w-4 h-4 absolute left-3 top-3 text-gray-400" />
                   <input
-                    className="border rounded-lg pl-10 pr-3 py-2 text-sm w-64"
+                    className="border rounded-lg pl-10 pr-3 py-2 text-sm w-full sm:w-56"
                     placeholder="Search applicants..."
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                   />
                 </div>
               </div>
+
+          
+             {/* Clear Filters */}
+<button
+  onClick={handleClearFilters}
+  className="text-sm text-red-500 font-medium hover:underline ml-auto lg:mt-5"
+>
+  Clear Filters
+</button>
+
             </div>
 
-            {/* ➕ Add New Button */}
+            {/* Add New */}
             <button
               onClick={() => setShowAddModal(true)}
-              className="bg-[#080156] text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-[#0b037a] transition"
+              className="bg-[#080156] text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-[#0b037a] transition w-full sm:w-auto"
             >
               + New Application
             </button>
           </div>
 
           {/* Table */}
-          <JobApplicationsTable
-            data={paginatedData}
-            onView={setViewing}
-            onEdit={setEditing}
-            onDelete={setShowConfirmDelete}
-          />
+          <div className="overflow-x-auto">
+            <JobApplicationsTable
+              data={paginatedData}
+              onView={setViewing}
+              onEdit={setEditing}
+              onDelete={setShowConfirmDelete}
+            />
+          </div>
 
           {/* Pagination */}
-          <div className="flex justify-between items-center mt-4 text-sm text-gray-600">
-            <p>
+          <div className="flex flex-col sm:flex-row justify-between items-center mt-6 text-sm text-gray-600 gap-3">
+            <p className="text-center sm:text-left">
               Showing {(currentPage - 1) * itemsPerPage + 1}–
               {Math.min(currentPage * itemsPerPage, filteredResults.length)} of{" "}
               {filteredResults.length}

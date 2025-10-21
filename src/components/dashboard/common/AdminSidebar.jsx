@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   LayoutDashboard,
   Briefcase,
@@ -12,46 +12,66 @@ import { NavLink, useNavigate } from "react-router-dom";
 const AdminSidebar = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
 
   const links = [
     { id: "overview", label: "Overview", icon: <LayoutDashboard size={20} /> },
-    {
-      id: "applications",
-      label: "Jobs & Internships",
-      icon: <Briefcase size={20} />,
-    },
-    {
-      id: "interviews",
-      label: "Interviews",
-      icon: <CalendarCheck2 size={20} />,
-    },
+    { id: "applications", label: "Jobs & Internships", icon: <Briefcase size={20} /> },
+    { id: "interviews", label: "Interviews", icon: <CalendarCheck2 size={20} /> },
   ];
+
+  useEffect(() => {
+    const handleResize = () => setIsDesktop(window.innerWidth >= 1024);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    setIsOpen(isDesktop);
+  }, [isDesktop]);
 
   return (
     <>
-      {/* ======= MOBILE HEADER ======= */}
-      <div className="lg:hidden fixed top-0 left-0 w-full flex items-center justify-between bg-[#080156] text-white px-5 py-4 shadow-md z-50">
-        {/* <h1 className="text-xl font-extrabold tracking-wide">
-          <span className="text-[#f59c22]">Codes</span>Thinker
-        </h1> */}
+      {/* Mobile Hamburger Button */}
+      {!isDesktop && !isOpen && (
         <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="p-2 rounded-md hover:bg-[#f59c22]/20 transition"
+          aria-label="Open Sidebar"
+          className="fixed top-2 left-5 z-50 p-3 shadow-lg rounded-full text-white flex items-center justify-center
+          hover:scale-110 hover:shadow-2xl transition-transform duration-300"
+          onClick={() => setIsOpen(true)}
         >
-          {isOpen ? <X size={26} /> : <Menu size={26} />}
+          <Menu size={24} />
         </button>
-      </div>
+      )}
 
-      {/* ======= SIDEBAR ======= */}
+      {/* Mobile Backdrop */}
+      {!isDesktop && isOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-opacity duration-300"
+          onClick={() => setIsOpen(false)}
+        />
+      )}
+
+      {/* Sidebar */}
       <aside
-        className={`fixed  lg:top-0 top-10 left-0 h-screen w-64 bg-gradient-to-b from-[#080156] to-[#0c0c3c] text-white shadow-xl flex flex-col border-r border-[#f59c22]/20 transform transition-transform duration-300 z-40
-        ${isOpen ? "translate-x-0" : "-translate-x-full"} 
-        lg:translate-x-0`}
+        className={`fixed top-0 left-0 h-screen w-64 bg-gradient-to-b from-[#080156] to-[#0c0c3c] text-white shadow-xl flex flex-col border-r border-[#f59c22]/20 transform transition-transform duration-300 z-50
+        ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
       >
+        {/* Mobile Close Button */}
+        {!isDesktop && isOpen && (
+          <button
+            onClick={() => setIsOpen(false)}
+            className="absolute top-2 right-5 p-2.5 rounded-full text-white shadow-lg flex items-center justify-center
+            hover:scale-110 hover:shadow-2xl transition-transform duration-300 z-50"
+          >
+            <X size={24} />
+          </button>
+        )}
+
         {/* Logo Section */}
         <div className="p-6 flex flex-col items-center border-b border-[#f59c22]/30 backdrop-blur-sm">
           <div className="flex flex-col items-center justify-center">
-            <h1 className="text-3xl font-extrabold tracking-wide">
+            <h1 className="text-3xl font-extrabold tracking-wide mt-6">
               <span className="text-[#f59c22] drop-shadow-sm">Codes</span>
               <span className="text-white">Thinker</span>
             </h1>
@@ -66,8 +86,8 @@ const AdminSidebar = () => {
           {links.map((link) => (
             <NavLink
               key={link.id}
-              to={`${link.id}`}
-              onClick={() => setIsOpen(false)} // close sidebar on mobile link click
+              to={link.id}
+              onClick={() => !isDesktop && setIsOpen(false)}
               className={({ isActive }) =>
                 `relative flex items-center gap-3 w-full px-4 py-3 rounded-xl text-[15px] font-semibold transition-all duration-300 ${
                   isActive
@@ -103,14 +123,6 @@ const AdminSidebar = () => {
           </button>
         </div>
       </aside>
-
-      {/* ======= MOBILE OVERLAY ======= */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-30 lg:hidden"
-          onClick={() => setIsOpen(false)}
-        ></div>
-      )}
     </>
   );
 };

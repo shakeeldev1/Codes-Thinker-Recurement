@@ -11,6 +11,7 @@ import AdminSidebar from './components/dashboard/common/AdminSidebar';
 import Overview from './pages/dashboard/Overview';
 import JobsApplications from './pages/dashboard/JobsApplications';
 import InterviewPage from './pages/dashboard/InterviewPage';
+import JobPostPage from './pages/dashboard/JobPostPage';
 
 const MainComponent = () => {
   return (
@@ -58,6 +59,9 @@ const router = createBrowserRouter([
         path:"/applications",element:<JobsApplications/>
       },{
         path:"/interviews",element:<InterviewPage/>
+      },
+      {
+        path:"/job-post",element:<JobPostPage/>
       }
     ]
   }

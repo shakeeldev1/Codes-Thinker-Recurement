@@ -6,6 +6,8 @@ import {
   LogOut,
   Menu,
   X,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -13,10 +15,19 @@ const AdminSidebar = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
+  const [isJobsOpen, setIsJobsOpen] = useState(false); // Dropdown state
 
   const links = [
     { id: "overview", label: "Overview", icon: <LayoutDashboard size={20} /> },
-    { id: "applications", label: "Jobs & Internships", icon: <Briefcase size={20} /> },
+    {
+      id: "jobs",
+      label: "Jobs & Internships",
+      icon: <Briefcase size={20} />,
+      dropdown: [
+        { id: "applications", label: "Applications" },
+        { id: "job-post", label: "New Post" },
+      ],
+    },
     { id: "interviews", label: "Interviews", icon: <CalendarCheck2 size={20} /> },
   ];
 
@@ -83,30 +94,70 @@ const AdminSidebar = () => {
 
         {/* Navigation Links */}
         <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto scrollbar-thin scrollbar-thumb-[#f59c22]/40 scrollbar-track-transparent">
-          {links.map((link) => (
-            <NavLink
-              key={link.id}
-              to={link.id}
-              onClick={() => !isDesktop && setIsOpen(false)}
-              className={({ isActive }) =>
-                `relative flex items-center gap-3 w-full px-4 py-3 rounded-xl text-[15px] font-semibold transition-all duration-300 ${
-                  isActive
-                    ? "bg-gradient-to-r from-[#f59c22] to-[#ffb84d] text-[#080156] shadow-lg"
-                    : "text-gray-200 hover:bg-white/10 hover:text-[#f59c22]"
-                }`
-              }
-            >
-              {({ isActive }) => (
-                <>
-                  {isActive && (
-                    <span className="absolute left-0 w-1 h-8 bg-[#f59c22] rounded-r-lg shadow-sm"></span>
+          {links.map((link) => {
+            // If the link has a dropdown
+            if (link.dropdown) {
+              return (
+                <div key={link.id}>
+                  <button
+                    onClick={() => setIsJobsOpen(!isJobsOpen)}
+                    className="flex items-center justify-between w-full px-4 py-3 rounded-xl text-[15px] font-semibold text-gray-200 hover:bg-white/10 hover:text-[#f59c22] transition-all duration-300"
+                  >
+                    <div className="flex items-center gap-3">
+                      {link.icon}
+                      {link.label}
+                    </div>
+                    {isJobsOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                  </button>
+                  {/* Dropdown Items */}
+                  {isJobsOpen && (
+                    <div className="flex flex-col pl-12 mt-1 space-y-1">
+                      {link.dropdown.map((item) => (
+                        <NavLink
+                          key={item.id}
+                          to={item.id}
+                          onClick={() => !isDesktop && setIsOpen(false)}
+                          className={({ isActive }) =>
+                            `px-4 py-2 rounded-lg text-gray-300 hover:text-[#f59c22] hover:bg-white/10 transition-all duration-300 ${
+                              isActive ? "bg-[#f59c22]/20 text-[#f59c22]" : ""
+                            }`
+                          }
+                        >
+                          {item.label}
+                        </NavLink>
+                      ))}
+                    </div>
                   )}
-                  {link.icon}
-                  {link.label}
-                </>
-              )}
-            </NavLink>
-          ))}
+                </div>
+              );
+            }
+
+            // Regular link
+            return (
+              <NavLink
+                key={link.id}
+                to={link.id}
+                onClick={() => !isDesktop && setIsOpen(false)}
+                className={({ isActive }) =>
+                  `relative flex items-center gap-3 w-full px-4 py-3 rounded-xl text-[15px] font-semibold transition-all duration-300 ${
+                    isActive
+                      ? "bg-gradient-to-r from-[#f59c22] to-[#ffb84d] text-[#080156] shadow-lg"
+                      : "text-gray-200 hover:bg-white/10 hover:text-[#f59c22]"
+                  }`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    {isActive && (
+                      <span className="absolute left-0 w-1 h-8 bg-[#f59c22] rounded-r-lg shadow-sm"></span>
+                    )}
+                    {link.icon}
+                    {link.label}
+                  </>
+                )}
+              </NavLink>
+            );
+          })}
         </nav>
 
         {/* Logout Button */}

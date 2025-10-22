@@ -13,9 +13,18 @@ const ApplicationForm = ({ onCancel, onSubmit}) => {
         joiningDate: "",
         cv: null,
         coverLetter: null,
-        interest1: "",
+        experienceYears: "",
+        previousCompany: "",
+        positionHeld: "",
+        educationLevel: "",
+        universityName: "",
+        graduationYear: "",
+        skills: "",
+        portfolio: "",
         linkedin: "",
-        interest2: "",
+        github: "",
+        references: "",
+        interest1: "",
         agreement: false,
     });
 
@@ -23,7 +32,12 @@ const ApplicationForm = ({ onCancel, onSubmit}) => {
         const { name, value, type, checked, files } = e.target;
         setFormData({
             ...formData,
-            [name]: type === "checkbox" ? checked : type === "file" ? files[0] : value,
+            [name]:
+                type === "checkbox"
+                    ? checked
+                    : type === "file"
+                        ? files[0]
+                        : value,
         });
     };
 
@@ -34,14 +48,13 @@ const ApplicationForm = ({ onCancel, onSubmit}) => {
 
     return (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-[9999]">
-            <div className="bg-white rounded-3xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="bg-white rounded-3xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
                 {/* Header */}
                 <div className="relative bg-gradient-to-r from-[#0B055A] to-[#5A51D3] text-white p-6 rounded-t-3xl flex justify-between items-center">
                     <div>
-                        <h2 className="text-2xl font-bold">Job Application Form</h2>
-                        <p className="text-sm text-white/80 mt-1">Please fill in all required fields</p>
+                        <h2 className="text-2xl font-bold">Job & Internship Application Form</h2>
+                        <p className="text-sm text-white/80 mt-1">Please fill in all required fields carefully</p>
                     </div>
-
                     <button
                         onClick={onCancel}
                         aria-label="Close"
@@ -54,129 +67,45 @@ const ApplicationForm = ({ onCancel, onSubmit}) => {
                 {/* Form */}
                 <form onSubmit={handleSubmit} className="p-8 space-y-8">
                     {/* Personal Information */}
-                    <div>
+                    <section>
                         <h3 className="text-lg font-semibold mb-4">Personal Information</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Full Name <span className="text-red-500">*</span>
-                                </label>
-                                <input
-                                    id="fullName"
-                                    name="fullName"
-                                    placeholder="Full Name"
-                                    className="border rounded-lg p-3 w-full bg-white"
-                                    onChange={handleChange}
-                                    value={formData.fullName}
-                                    required
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Phone Number <span className="text-red-500">*</span>
-                                </label>
-                                <input
-                                    id="phoneNumber"
-                                    name="phoneNumber"
-                                    placeholder="Phone Number"
-                                    className="border rounded-lg p-3 w-full bg-white"
-                                    onChange={handleChange}
-                                    value={formData.phoneNumber}
-                                    required
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Email Address <span className="text-red-500">*</span>
-                                </label>
-                                <input
-                                    id="email"
-                                    type="email"
-                                    name="email"
-                                    placeholder="Email Address"
-                                    className="border rounded-lg p-3 w-full bg-white"
-                                    onChange={handleChange}
-                                    value={formData.email}
-                                    required
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="cityCountry" className="block text-sm font-medium text-gray-700 mb-2">
-                                    City/Country
-                                </label>
-                                <input
-                                    id="cityCountry"
-                                    name="cityCountry"
-                                    placeholder="City/Country"
-                                    className="border rounded-lg p-3 w-full bg-white"
-                                    onChange={handleChange}
-                                    value={formData.cityCountry}
-                                />
-                            </div>
+                            <InputField label="Full Name" name="fullName" required value={formData.fullName} onChange={handleChange} />
+                            <InputField label="Phone Number" name="phoneNumber" required value={formData.phoneNumber} onChange={handleChange} />
+                            <InputField label="Email Address" name="email" type="email" required value={formData.email} onChange={handleChange} />
+                            <InputField label="City / Country" name="cityCountry" value={formData.cityCountry} onChange={handleChange} />
+                            <InputField label="Address" name="address" value={formData.address} onChange={handleChange} />
                         </div>
-                    </div>
+                    </section>
 
                     {/* Position Details */}
-                    <div>
+                    <section>
                         <h3 className="text-lg font-semibold mb-4">Position Details</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <SelectField
+                                label="Select Job / Internship Title"
+                                name="jobTitle"
+                                options={[
+                                    "Frontend Developer",
+                                    "Backend Developer",
+                                    "Full Stack Developer",
+                                    "AI Intern",
+                                    "ML Engineer",
+                                    "UI/UX Designer",
+                                    "Data Analyst",
+                                ]}
+                                value={formData.jobTitle}
+                                onChange={handleChange}
+                            />
+                            <SelectField
+                                label="Preferred Department"
+                                name="department"
+                                options={["Engineering", "Marketing", "Research", "Operations", "HR"]}
+                                value={formData.department}
+                                onChange={handleChange}
+                            />
                             <div>
-                                <label htmlFor="jobTitle" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Select Job & Internship Title
-                                </label>
-                                <select
-                                    id="jobTitle"
-                                    name="jobTitle"
-                                    className="border rounded-lg p-3 w-full bg-white"
-                                    onChange={handleChange}
-                                    value={formData.jobTitle}
-                                >
-                                    <option value="">Select Job & Internship Title</option>
-                                    <option value="Frontend Developer">Frontend Developer</option>
-                                    <option value="Backend Developer">Backend Developer</option>
-                                    <option value="AI Intern">AI Intern</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label htmlFor="department" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Preferred Department
-                                </label>
-                                <select
-                                    id="department"
-                                    name="department"
-                                    className="border rounded-lg p-3 w-full bg-white"
-                                    onChange={handleChange}
-                                    value={formData.department}
-                                >
-                                    <option value="">Preferred Department</option>
-                                    <option value="Engineering">Engineering</option>
-                                    <option value="Marketing">Marketing</option>
-                                    <option value="Research">Research</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Address
-                                </label>
-                                <input
-                                    id="address"
-                                    name="address"
-                                    placeholder="Address"
-                                    className="border rounded-lg p-3 w-full bg-white"
-                                    onChange={handleChange}
-                                    value={formData.address}
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="joiningDate" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Joining Date
-                                </label>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Expected Joining Date</label>
                                 <div className="relative">
                                     <input
                                         id="joiningDate"
@@ -190,98 +119,70 @@ const ApplicationForm = ({ onCancel, onSubmit}) => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
+
+                    {/* Work Experience */}
+                    <section>
+                        <h3 className="text-lg font-semibold mb-4">Work Experience</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <InputField label="Years of Experience" name="experienceYears" value={formData.experienceYears} onChange={handleChange} />
+                            <InputField label="Previous Company" name="previousCompany" value={formData.previousCompany} onChange={handleChange} />
+                            <InputField label="Last Position Held" name="positionHeld" value={formData.positionHeld} onChange={handleChange} />
+                        </div>
+                    </section>
+
+                    {/* Education */}
+                    <section>
+                        <h3 className="text-lg font-semibold mb-4">Education</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <InputField label="Highest Education Level" name="educationLevel" placeholder="e.g., Bachelor's, Master's" value={formData.educationLevel} onChange={handleChange} />
+                            <InputField label="University / Institute" name="universityName" value={formData.universityName} onChange={handleChange} />
+                            <InputField label="Graduation Year" name="graduationYear" type="number" value={formData.graduationYear} onChange={handleChange} />
+                        </div>
+                    </section>
+
+                    {/* Skills and Links */}
+                    <section>
+                        <h3 className="text-lg font-semibold mb-4">Skills & Links</h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <InputField label="Key Skills (comma separated)" name="skills" placeholder="e.g., React, Python, ML, SQL" value={formData.skills} onChange={handleChange} />
+                            <InputField label="Portfolio / Personal Website" name="portfolio" value={formData.portfolio} onChange={handleChange} />
+                            <InputField label="LinkedIn Profile" name="linkedin" value={formData.linkedin} onChange={handleChange} />
+                            <InputField label="GitHub Profile" name="github" value={formData.github} onChange={handleChange} />
+                        </div>
+                    </section>
 
                     {/* Documents Upload */}
-                    <div>
+                    <section>
                         <h3 className="text-lg font-semibold mb-4">Documents Upload</h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label htmlFor="cv" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Upload CV/Resume
-                                </label>
-                                <div className="flex items-center gap-3 border rounded-lg p-3 bg-white">
-                                    <Upload className="text-gray-500 w-5 h-5" />
-                                    <input
-                                        id="cv"
-                                        type="file"
-                                        name="cv"
-                                        accept=".pdf,.doc,.docx"
-                                        onChange={handleChange}
-                                        className="w-full text-sm"
-                                    />
-                                </div>
-                            </div>
-
-                            <div>
-                                <label htmlFor="coverLetter" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Upload Cover Letter
-                                </label>
-                                <div className="flex items-center gap-3 border rounded-lg p-3 bg-white">
-                                    <Upload className="text-gray-500 w-5 h-5" />
-                                    <input
-                                        id="coverLetter"
-                                        type="file"
-                                        name="coverLetter"
-                                        accept=".pdf,.doc,.docx"
-                                        onChange={handleChange}
-                                        className="w-full text-sm"
-                                    />
-                                </div>
-                            </div>
+                            <FileUpload label="Upload CV / Resume" name="cv" onChange={handleChange} />
+                            <FileUpload label="Upload Cover Letter" name="coverLetter" onChange={handleChange} />
                         </div>
-                    </div>
+                    </section>
 
                     {/* Additional Info */}
-                    <div>
+                    <section>
                         <h3 className="text-lg font-semibold mb-4">Additional Info</h3>
-
-                        <div className="border rounded-lg p-4 bg-white space-y-4">
-                            <div>
-                                <label htmlFor="interest1" className="block text-sm font-medium text-gray-700 mb-2">
-                                    Why are you interested in this role?
-                                </label>
-                                <textarea
-                                    id="interest1"
-                                    name="interest1"
-                                    rows={3}
-                                    placeholder="Why are you interested in this role?"
-                                    className="w-full border rounded-md p-3 bg-white resize-none"
-                                    onChange={handleChange}
-                                    value={formData.interest1}
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="linkedin" className="block text-sm font-medium text-gray-700 mb-2">
-                                    LinkedIn Profile URL
-                                </label>
-                                <input
-                                    id="linkedin"
-                                    name="linkedin"
-                                    placeholder="LinkedIn Profile URL"
-                                    className="border rounded-lg p-3 w-full bg-white"
-                                    onChange={handleChange}
-                                    value={formData.linkedin}
-                                />
-                            </div>
-
-                            <div>
-                                <label htmlFor="interest2" className="block text-sm font-medium text-gray-700 mb-2">
-                                    GitHub Profile URL
-                                </label>
-                                <textarea
-                                    id="interest2"
-                                    name="interest2"
-                                    rows={3}
-                                    placeholder="Why are you interested in this role?"
-                                    className="w-full border rounded-md p-3 bg-white resize-none"
-                                    onChange={handleChange}
-                                    value={formData.interest2}
-                                />
-                            </div>
-                        </div>
-                    </div>
+                        <textarea
+                            id="interest1"
+                            name="interest1"
+                            rows={4}
+                            placeholder="Why are you interested in this role?"
+                            className="w-full border rounded-md p-3 bg-white resize-none"
+                            onChange={handleChange}
+                            value={formData.interest1}
+                        />
+                        <textarea
+                            id="references"
+                            name="references"
+                            rows={3}
+                            placeholder="Provide any references (optional)"
+                            className="w-full border rounded-md p-3 bg-white resize-none mt-4"
+                            onChange={handleChange}
+                            value={formData.references}
+                        />
+                    </section>
 
                     {/* Agreement */}
                     <div className="flex items-start gap-3">
@@ -294,8 +195,10 @@ const ApplicationForm = ({ onCancel, onSubmit}) => {
                             className="w-5 h-5 accent-[#110C61] mt-1"
                         />
                         <label htmlFor="agreement" className="text-gray-700 text-sm">
-                            <span className="font-medium">Publishing Agreement</span>
-                            <div className="text-gray-500">I agree that my review can be published on the website.</div>
+                            <span className="font-medium">Declaration</span>
+                            <div className="text-gray-500">
+                                I confirm that the information provided above is accurate to the best of my knowledge.
+                            </div>
                         </label>
                     </div>
 
@@ -313,5 +216,65 @@ const ApplicationForm = ({ onCancel, onSubmit}) => {
         </div>
     );
 };
+
+// 🧩 Helper Components
+const InputField = ({ label, name, type = "text", required, value, onChange, placeholder }) => (
+    <div>
+        <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-2">
+            {label} {required && <span className="text-red-500">*</span>}
+        </label>
+        <input
+            id={name}
+            name={name}
+            type={type}
+            placeholder={placeholder || label}
+            className="border rounded-lg p-3 w-full bg-white"
+            onChange={onChange}
+            value={value}
+            required={required}
+        />
+    </div>
+);
+
+const SelectField = ({ label, name, options, value, onChange }) => (
+    <div>
+        <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-2">
+            {label}
+        </label>
+        <select
+            id={name}
+            name={name}
+            className="border rounded-lg p-3 w-full bg-white"
+            onChange={onChange}
+            value={value}
+        >
+            <option value="">Select {label}</option>
+            {options.map((opt) => (
+                <option key={opt} value={opt}>
+                    {opt}
+                </option>
+            ))}
+        </select>
+    </div>
+);
+
+const FileUpload = ({ label, name, onChange }) => (
+    <div>
+        <label htmlFor={name} className="block text-sm font-medium text-gray-700 mb-2">
+            {label}
+        </label>
+        <div className="flex items-center gap-3 border rounded-lg p-3 bg-white">
+            <Upload className="text-gray-500 w-5 h-5" />
+            <input
+                id={name}
+                type="file"
+                name={name}
+                accept=".pdf,.doc,.docx"
+                onChange={onChange}
+                className="w-full text-sm"
+            />
+        </div>
+    </div>
+);
 
 export default ApplicationForm;

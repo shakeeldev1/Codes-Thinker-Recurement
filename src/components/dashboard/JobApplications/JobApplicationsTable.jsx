@@ -9,7 +9,6 @@ export default function JobApplicationsTable({
   onEdit,
   onDelete,
 }) {
-  // Professional field order
   const fields = [
     ["id", "ID"],
     ["name", "Name"],
@@ -27,7 +26,7 @@ export default function JobApplicationsTable({
     ["agreement", "Agreement"],
     ["joiningDate", "Joining Date"],
     ["date", "Application Date"],
-    ["status", "Status"], // show status near the end
+    ["status", "Status"],
   ];
 
   return (
@@ -52,6 +51,7 @@ export default function JobApplicationsTable({
               <th className="px-4 py-3 text-right">Action</th>
             </tr>
           </thead>
+
           <tbody className="divide-y divide-gray-100">
             {data.map((row) => (
               <tr
@@ -65,28 +65,37 @@ export default function JobApplicationsTable({
                     ) : key === "agreement" ? (
                       row[key] ? "Yes" : "No"
                     ) : key === "cv" || key === "coverLetter" ? (
-                      <a
-                        href={row[key]}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:underline"
-                      >
-                        {key.toUpperCase()}
-                      </a>
+                      row[key] ? (
+                        <a
+                          href={row[key]}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:underline"
+                        >
+                          {key.toUpperCase()}
+                        </a>
+                      ) : (
+                        "N/A"
+                      )
                     ) : key === "linkedin" || key === "github" ? (
-                      <a
-                        href={row[key]}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:underline"
-                      >
-                        {row[key].replace(/^https?:\/\//, "")}
-                      </a>
+                      row[key] ? (
+                        <a
+                          href={row[key]}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:underline"
+                        >
+                          {row[key]?.replace(/^https?:\/\//, "") || "N/A"}
+                        </a>
+                      ) : (
+                        "N/A"
+                      )
                     ) : (
-                      row[key]
+                      row[key] || "N/A"
                     )}
                   </td>
                 ))}
+
                 <td className="px-4 py-3 text-right">
                   <div className="inline-flex items-center gap-2">
                     <button
@@ -111,6 +120,7 @@ export default function JobApplicationsTable({
                 </td>
               </tr>
             ))}
+
             {data.length === 0 && (
               <tr>
                 <td
@@ -138,7 +148,9 @@ export default function JobApplicationsTable({
               className="bg-white shadow-sm border border-gray-200 rounded-xl p-4 space-y-3"
             >
               <div className="flex justify-between items-center">
-                <h3 className="font-semibold text-[#080156]">{row.name}</h3>
+                <h3 className="font-semibold text-[#080156]">
+                  {row.name || "N/A"}
+                </h3>
                 <StatusBadge status={row.status} />
               </div>
 
@@ -147,29 +159,39 @@ export default function JobApplicationsTable({
                   .filter(([key]) => key !== "status")
                   .map(([key, label]) => (
                     <p key={key}>
-                      <span className="font-semibold text-gray-700">{label}:</span>{" "}
+                      <span className="font-semibold text-gray-700">
+                        {label}:
+                      </span>{" "}
                       {key === "agreement" ? (
                         row[key] ? "Yes" : "No"
                       ) : key === "cv" || key === "coverLetter" ? (
-                        <a
-                          href={row[key]}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-600 hover:underline"
-                        >
-                          {key.toUpperCase()}
-                        </a>
+                        row[key] ? (
+                          <a
+                            href={row[key]}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:underline"
+                          >
+                            {key.toUpperCase()}
+                          </a>
+                        ) : (
+                          "N/A"
+                        )
                       ) : key === "linkedin" || key === "github" ? (
-                        <a
-                          href={row[key]}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-600 hover:underline"
-                        >
-                          {row[key].replace(/^https?:\/\//, "")}
-                        </a>
+                        row[key] ? (
+                          <a
+                            href={row[key]}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-600 hover:underline"
+                          >
+                            {row[key]?.replace(/^https?:\/\//, "") || "N/A"}
+                          </a>
+                        ) : (
+                          "N/A"
+                        )
                       ) : (
-                        row[key]
+                        row[key] || "N/A"
                       )}
                     </p>
                   ))}

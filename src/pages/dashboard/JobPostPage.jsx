@@ -142,7 +142,7 @@ const JobPostPage = () => {
   };
 
   return (
-    <div className="p-6 lg:ml-64 mt-15 lg:p-10 bg-gray-50 min-h-screen">
+    <div className="p-6 lg:ml-64 mt-20 lg:p-10 bg-gray-50 min-h-screen">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-[#060145]"> Jobs & Internship Posts
             

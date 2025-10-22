@@ -1,11 +1,11 @@
 import React, { useMemo, useState } from "react";
-import { Search, ChevronLeft, ChevronRight, XCircle } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 
 import DeleteModal from "../../components/dashboard/JobApplications/DeleteModal";
 import EditModal from "../../components/dashboard/JobApplications/EditModal";
 import ViewModal from "../../components/dashboard/JobApplications/ViewModal";
 import JobApplicationsTable from "../../components/dashboard/JobApplications/JobApplicationsTable";
-import AddModal from "../../components/dashboard/JobApplications/AddModal";
+import ApplicationFormModal from "../../components/common/ApplicationFormModal";
 
 const initialData = [
   {
@@ -46,9 +46,7 @@ const initialData = [
     coverLetter: "/coverletters/hamza.pdf",
     agreement: false,
   },
-  
 ];
-
 
 export default function JobsApplications() {
   const [data, setData] = useState(initialData);
@@ -58,11 +56,12 @@ export default function JobsApplications() {
   const [viewing, setViewing] = useState(null);
   const [editing, setEditing] = useState(null);
   const [showConfirmDelete, setShowConfirmDelete] = useState(null);
-  const [showAddModal, setShowAddModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isFormOpen, setIsFormOpen] = useState(false);
 
   const itemsPerPage = 20;
 
+  // ✅ Clear filters
   const handleClearFilters = () => {
     setQuery("");
     setFilterType("All");
@@ -70,6 +69,7 @@ export default function JobsApplications() {
     setCurrentPage(1);
   };
 
+  // ✅ Filter logic with memoization
   const filteredResults = useMemo(() => {
     return data.filter((row) => {
       const matchesQuery =
@@ -83,17 +83,20 @@ export default function JobsApplications() {
     });
   }, [data, query, filterType, jobType]);
 
+  // ✅ Pagination
   const totalPages = Math.ceil(filteredResults.length / itemsPerPage);
   const paginatedData = filteredResults.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
+  // ✅ Delete
   const handleDelete = (id) => {
     setData((d) => d.filter((r) => r.id !== id));
     setShowConfirmDelete(null);
   };
 
+  // ✅ Save edit
   const handleSaveEdit = (updated) => {
     setData((prev) =>
       prev.map((r) => (r.id === updated.id ? { ...updated } : r))
@@ -101,10 +104,31 @@ export default function JobsApplications() {
     setEditing(null);
   };
 
-  const handleAdd = (newApp) => {
-    setData((prev) => [...prev, newApp]);
-    setShowAddModal(false);
+// ✅ Add new application (fixed mapping)
+const handleAdd = (newApp) => {
+  const newApplication = {
+    id: `#ST-${Math.floor(Math.random() * 1000)}`,
+    name: newApp.fullName,
+    email: newApp.email,
+    phoneNumber: newApp.phoneNumber,
+    cityCountry: newApp.cityCountry,
+    address: newApp.address,
+    positionTitle: newApp.jobTitle,
+    department: newApp.department,
+    applicationType: "Internship",
+    linkedin: newApp.linkedin,
+    github: newApp.github, // ✅ fixed field
+    cv: newApp.cv ? newApp.cv.name : "N/A",
+    coverLetter: newApp.coverLetter ? newApp.coverLetter.name : "N/A",
+    agreement: newApp.agreement,
+    joiningDate: newApp.joiningDate,
+    date: new Date().toISOString().split("T")[0],
+    status: "Pending",
   };
+  setData((prev) => [...prev, newApplication]);
+  setIsFormOpen(false);
+};
+
 
   return (
     <div className="p-4 sm:p-6 md:p-8 bg-gray-50 min-h-screen lg:ml-64 mt-15">
@@ -115,11 +139,11 @@ export default function JobsApplications() {
         </h1>
 
         <div className="bg-white rounded-2xl border border-gray-100 shadow-lg p-4 sm:p-6">
-          {/* Filters + Buttons */}
+          {/* Filters + Add Button */}
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 lg:gap-6 mb-6">
             <div className="flex flex-wrap gap-4 lg:gap-6">
               {/* Status Filter */}
-              <div className="w-full sm:w-auto">
+              <div>
                 <label className="block text-xs font-semibold text-gray-500 mb-1">
                   Status
                 </label>
@@ -136,7 +160,7 @@ export default function JobsApplications() {
               </div>
 
               {/* Type Filter */}
-              <div className="w-full sm:w-auto">
+              <div>
                 <label className="block text-xs font-semibold text-gray-500 mb-1">
                   Type
                 </label>
@@ -152,7 +176,7 @@ export default function JobsApplications() {
               </div>
 
               {/* Search */}
-              <div className="w-full sm:w-auto">
+              <div>
                 <label className="block text-xs font-semibold text-gray-500 mb-1">
                   Search
                 </label>
@@ -167,20 +191,18 @@ export default function JobsApplications() {
                 </div>
               </div>
 
-          
-             {/* Clear Filters */}
-<button
-  onClick={handleClearFilters}
-  className="text-sm text-red-500 font-medium hover:underline ml-auto lg:mt-5"
->
-  Clear Filters
-</button>
-
+              {/* Clear Filters */}
+              <button
+                onClick={handleClearFilters}
+                className="text-sm text-red-500 font-medium hover:underline ml-auto lg:mt-5"
+              >
+                Clear Filters
+              </button>
             </div>
 
-            {/* Add New */}
+            {/* Add New Application */}
             <button
-              onClick={() => setShowAddModal(true)}
+              onClick={() => setIsFormOpen(true)}
               className="bg-[#080156] text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-[#0b037a] transition w-full sm:w-auto"
             >
               + New Application
@@ -199,7 +221,7 @@ export default function JobsApplications() {
 
           {/* Pagination */}
           <div className="flex flex-col sm:flex-row justify-between items-center mt-6 text-sm text-gray-600 gap-3">
-            <p className="text-center sm:text-left">
+            <p>
               Showing {(currentPage - 1) * itemsPerPage + 1}–
               {Math.min(currentPage * itemsPerPage, filteredResults.length)} of{" "}
               {filteredResults.length}
@@ -226,7 +248,7 @@ export default function JobsApplications() {
         </div>
       </div>
 
-      {/* Modals */}
+      {/* ✅ Modals */}
       {viewing && <ViewModal data={viewing} onClose={() => setViewing(null)} />}
       {editing && (
         <EditModal
@@ -241,8 +263,12 @@ export default function JobsApplications() {
           onConfirm={() => handleDelete(showConfirmDelete)}
         />
       )}
-      {showAddModal && (
-        <AddModal onClose={() => setShowAddModal(false)} onAdd={handleAdd} />
+      {isFormOpen && (
+        <ApplicationFormModal
+          onSubmit={handleAdd}
+          open={isFormOpen}
+          onClose={() => setIsFormOpen(false)}
+        />
       )}
     </div>
   );

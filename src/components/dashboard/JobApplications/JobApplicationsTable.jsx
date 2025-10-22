@@ -9,22 +9,35 @@ export default function JobApplicationsTable({
   onEdit,
   onDelete,
 }) {
+  // Professional field order
+  const fields = [
+    ["id", "ID"],
+    ["name", "Name"],
+    ["email", "Email"],
+    ["phoneNumber", "Phone"],
+    ["cityCountry", "City/Country"],
+    ["address", "Address"],
+    ["positionTitle", "Title"],
+    ["department", "Department"],
+    ["applicationType", "Type"],
+    ["linkedin", "LinkedIn"],
+    ["github", "GitHub"],
+    ["cv", "CV"],
+    ["coverLetter", "Cover Letter"],
+    ["agreement", "Agreement"],
+    ["joiningDate", "Joining Date"],
+    ["date", "Application Date"],
+    ["status", "Status"], // show status near the end
+  ];
+
   return (
     <div className="w-full">
-      {/* TABLE VIEW - visible on md and above */}
+      {/* DESKTOP TABLE */}
       <div className="hidden md:block overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
         <table className="min-w-full text-sm">
           <thead className="bg-[#080156]/10 text-[#080156] uppercase text-xs font-semibold">
             <tr>
-              {[
-                ["name", "Name"],
-                ["id", "ID"],
-                ["applicationType", "Type"],
-                ["positionTitle", "Title"],
-                ["department", "Department"],
-                ["date", "Date"],
-                ["status", "Status"],
-              ].map(([key, label]) => (
+              {fields.map(([key, label]) => (
                 <th
                   key={key}
                   onClick={() => handleSort && handleSort(key)}
@@ -45,15 +58,35 @@ export default function JobApplicationsTable({
                 key={row.id}
                 className="hover:bg-[#080156]/5 transition-all even:bg-gray-50 whitespace-nowrap"
               >
-                <td className="px-4 py-3 font-medium">{row.name}</td>
-                <td className="px-4 py-3">{row.id}</td>
-                <td className="px-4 py-3">{row.applicationType}</td>
-                <td className="px-4 py-3">{row.positionTitle}</td>
-                <td className="px-4 py-3">{row.department}</td>
-                <td className="px-4 py-3">{row.date}</td>
-                <td className="px-4 py-3">
-                  <StatusBadge status={row.status} />
-                </td>
+                {fields.map(([key]) => (
+                  <td key={key} className="px-4 py-3 font-medium">
+                    {key === "status" ? (
+                      <StatusBadge status={row[key]} />
+                    ) : key === "agreement" ? (
+                      row[key] ? "Yes" : "No"
+                    ) : key === "cv" || key === "coverLetter" ? (
+                      <a
+                        href={row[key]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:underline"
+                      >
+                        {key.toUpperCase()}
+                      </a>
+                    ) : key === "linkedin" || key === "github" ? (
+                      <a
+                        href={row[key]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:underline"
+                      >
+                        {row[key].replace(/^https?:\/\//, "")}
+                      </a>
+                    ) : (
+                      row[key]
+                    )}
+                  </td>
+                ))}
                 <td className="px-4 py-3 text-right">
                   <div className="inline-flex items-center gap-2">
                     <button
@@ -80,7 +113,10 @@ export default function JobApplicationsTable({
             ))}
             {data.length === 0 && (
               <tr>
-                <td colSpan={8} className="px-4 py-6 text-center text-gray-500">
+                <td
+                  colSpan={fields.length + 1}
+                  className="px-4 py-6 text-center text-gray-500"
+                >
                   No results found.
                 </td>
               </tr>
@@ -107,28 +143,36 @@ export default function JobApplicationsTable({
               </div>
 
               <div className="text-sm text-gray-600 space-y-1">
-                <p>
-                  <span className="font-semibold text-gray-700">ID:</span>{" "}
-                  {row.id}
-                </p>
-                <p>
-                  <span className="font-semibold text-gray-700">Type:</span>{" "}
-                  {row.applicationType}
-                </p>
-                <p>
-                  <span className="font-semibold text-gray-700">Title:</span>{" "}
-                  {row.positionTitle}
-                </p>
-                <p>
-                  <span className="font-semibold text-gray-700">
-                    Department:
-                  </span>{" "}
-                  {row.department}
-                </p>
-                <p>
-                  <span className="font-semibold text-gray-700">Date:</span>{" "}
-                  {row.date}
-                </p>
+                {fields
+                  .filter(([key]) => key !== "status")
+                  .map(([key, label]) => (
+                    <p key={key}>
+                      <span className="font-semibold text-gray-700">{label}:</span>{" "}
+                      {key === "agreement" ? (
+                        row[key] ? "Yes" : "No"
+                      ) : key === "cv" || key === "coverLetter" ? (
+                        <a
+                          href={row[key]}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:underline"
+                        >
+                          {key.toUpperCase()}
+                        </a>
+                      ) : key === "linkedin" || key === "github" ? (
+                        <a
+                          href={row[key]}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:underline"
+                        >
+                          {row[key].replace(/^https?:\/\//, "")}
+                        </a>
+                      ) : (
+                        row[key]
+                      )}
+                    </p>
+                  ))}
               </div>
 
               <div className="flex justify-end gap-2 pt-2">

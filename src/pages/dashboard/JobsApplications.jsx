@@ -26,6 +26,16 @@ const initialData = [
     cv: "/resumes/aisha.pdf",
     coverLetter: "/coverletters/aisha.pdf",
     agreement: true,
+     experienceYears: 2,
+    previousCompany: "TechVision Pvt Ltd",
+    positionHeld: "Junior Front-End Developer",
+    educationLevel: "Bachelor’s in Computer Science",
+    universityName: "University of Karachi",
+    graduationYear: 2023,
+    skills: "React, JavaScript, HTML, CSS, TailwindCSS",
+    portfolio: "https://aisha-portfolio.com",
+    references: "https://linkedin.com/in/techvision-ref",
+    interest1: "Looking to gain experience in real-world web development.",
   },
   {
     id: "#ST-246",
@@ -45,6 +55,16 @@ const initialData = [
     cv: "/resumes/hamza.pdf",
     coverLetter: "/coverletters/hamza.pdf",
     agreement: false,
+      experienceYears: 4,
+    previousCompany: "Innovatech Solutions",
+    positionHeld: "Software Engineer",
+    educationLevel: "Master’s in Software Engineering",
+    universityName: "Lahore University of Management Sciences (LUMS)",
+    graduationYear: 2021,
+    skills: "Node.js, React, MongoDB, Express.js, TypeScript",
+    portfolio: "https://hamza-dev.com",
+    references: "https://linkedin.com/in/innovatech-ref",
+    interest1: "Excited to work on scalable web applications and mentor juniors.",
   },
 ];
 
@@ -116,8 +136,18 @@ const handleAdd = (newApp) => {
     positionTitle: newApp.jobTitle,
     department: newApp.department,
     applicationType: "Internship",
+    experienceYears: newApp.experienceYears,
+    previousCompany: newApp.previousCompany,
+    positionHeld: newApp.positionHeld,
+    educationLevel: newApp.educationLevel,
+    universityName: newApp.universityName,
+    graduationYear: newApp.graduationYear,
+    skills: newApp.skills,
+    portfolio: newApp.portfolio,
     linkedin: newApp.linkedin,
-    github: newApp.github, // ✅ fixed field
+    github: newApp.github,
+    references: newApp.references,
+    interest1: newApp.interest1,
     cv: newApp.cv ? newApp.cv.name : "N/A",
     coverLetter: newApp.coverLetter ? newApp.coverLetter.name : "N/A",
     agreement: newApp.agreement,
@@ -128,6 +158,7 @@ const handleAdd = (newApp) => {
   setData((prev) => [...prev, newApplication]);
   setIsFormOpen(false);
 };
+
 
 
   return (

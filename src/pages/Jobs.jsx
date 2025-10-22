@@ -197,7 +197,7 @@ const Jobs = () => {
                             transition: { staggerChildren: 0.1 },
                         },
                     }}
-                    className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6"
+                    className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 lg:gap-6 md:px-2 md:gap-6"
                 >
                     {filteredJobs.map((job) => (
                         <motion.div

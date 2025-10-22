@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Plus } from "lucide-react";
+import toast from "react-hot-toast";
 import JobPostTable from "../../components/dashboard/JobPostPage/JobPostTable";
 import JobPostModal from "../../components/dashboard/JobPostPage/JobPostModal";
 import JobPostViewModal from "../../components/dashboard/JobPostPage/JobPostViewModal";
@@ -86,6 +87,7 @@ const JobPostPage = () => {
     setJobs([newJob, ...jobs]);
     setIsAddModalOpen(false);
     resetForm();
+    toast.success(" Successfully posted new job!");
   };
 
   const handleEditJob = (e) => {
@@ -99,11 +101,13 @@ const JobPostPage = () => {
     setJobs(jobs.map((job) => (job.id === jobForm.id ? updatedJob : job)));
     setIsEditModalOpen(false);
     resetForm();
+    toast.success("✏️ Job updated successfully!");
   };
 
   const handleDeleteJob = () => {
     setJobs(jobs.filter((job) => job.id !== selectedJob.id));
     setIsDeleteModalOpen(false);
+    toast.error("🗑️ Job deleted successfully!");
   };
 
   const openViewModal = (job) => {

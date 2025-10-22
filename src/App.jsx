@@ -13,6 +13,11 @@ import JobsApplications from './pages/dashboard/JobsApplications';
 import InterviewPage from './pages/dashboard/InterviewPage';
 import JobPostPage from './pages/dashboard/JobPostPage';
 
+import { Toaster } from 'react-hot-toast'; // ✅ Import Toaster
+
+// =======================
+// Main Site Layout
+// =======================
 const MainComponent = () => {
   return (
     <div>
@@ -23,20 +28,22 @@ const MainComponent = () => {
   );
 };
 
-
-
-const AdminRoute=()=>{
+// =======================
+// Admin Layout
+// =======================
+const AdminRoute = () => {
   return (
     <div>
-
-    <AdminNavbar/>
-    <AdminSidebar/>
-    <Outlet/>
-   
+      <AdminNavbar />
+      <AdminSidebar />
+      <Outlet />
     </div>
-  )
-}
+  );
+};
 
+// =======================
+// Router Configuration
+// =======================
 const router = createBrowserRouter([
   {
     path: '/',
@@ -47,28 +54,49 @@ const router = createBrowserRouter([
       { path: '/jobs/:id', element: <JobDetail /> },
     ],
   },
-      
-
-  
   {
-    element:<AdminRoute/>,
-    children:[
-      {
-        path:"/overview",element:<Overview/>
-      },{
-        path:"/applications",element:<JobsApplications/>
-      },{
-        path:"/interviews",element:<InterviewPage/>
-      },
-      {
-        path:"/job-post",element:<JobPostPage/>
-      }
-    ]
-  }
+    element: <AdminRoute />,
+    children: [
+      { path: '/overview', element: <Overview /> },
+      { path: '/applications', element: <JobsApplications /> },
+      { path: '/interviews', element: <InterviewPage /> },
+      { path: '/job-post', element: <JobPostPage /> },
+    ],
+  },
 ]);
 
+// =======================
+// App Component
+// =======================
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+
+      {/* ✅ Toast Notification Provider */}
+     <Toaster
+  position="top-right"
+  toastOptions={{
+    style: {
+      background: 'linear-gradient(135deg, #080156, #F59C20)', // blue → gold
+      color: '#ffffff',
+      borderRadius: '10px',
+      padding: '12px 16px',
+      border: '1px solid rgba(255, 255, 255, 0.2)',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
+    },
+    success: {
+      iconTheme: {
+        primary: '#fff',
+        secondary: '#080156',
+      },
+    },
+  }}
+/>
+
+
+    </>
+  );
 }
 
 export default App;

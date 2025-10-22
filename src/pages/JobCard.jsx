@@ -46,13 +46,13 @@ const JobCard = ({ job, onClick }) => {
             </div>
 
             {/* Description & Info */}
-            <div className="p-5 flex-grow flex flex-col justify-between">
+            <div className="p-5  flex flex-col justify-between">
                 <div>
                     <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-4 line-clamp-2 min-h-[48px]">
                         {job.description}
                     </p>
 
-                    <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 gap-3 mb-5">
+                    <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 gap-3 mb-5 py-2">
                         <Info icon={<Type />} label={job.type} />
                         <Info icon={<Award />} label={job.experience} />
                         <Info icon={<MapPin />} label={job.location} />
@@ -60,14 +60,14 @@ const JobCard = ({ job, onClick }) => {
                     </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2 mt-auto">
+                <div className="flex gap-2 whitespace-nowrap">
                     {job.skills.slice(0, 3).map((skill, i) => (
                         <motion.span
                             key={i}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: i * 0.1 }}
-                            className="px-3 py-1 bg-[#060145]/10 text-[#060145] text-xs sm:text-sm font-medium rounded-md"
+                            className="px-2 py-1 bg-[#060145]/10 text-[#060145] text-xs sm:text-sm font-medium rounded-md"
                         >
                             {skill}
                         </motion.span>
@@ -105,7 +105,7 @@ const JobCard = ({ job, onClick }) => {
             <motion.div
                 whileHover={{ scale: 1.01 }}
                 transition={{ duration: 0.3 }}
-                className="p-4 bg-[#060145]"
+                className="p-4 bg-[#060145] lg:mt-[-30px] mt-[-14px] md:mt-[-30px]"
             >
                 <button
                     onClick={(e) => {

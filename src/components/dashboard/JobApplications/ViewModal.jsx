@@ -1,113 +1,208 @@
 import React from "react";
-import { XCircle, Eye } from "lucide-react";
+import {
+  XCircle,
+  FileText,
+  Link2,
+  User,
+  Briefcase,
+  GraduationCap,
+  ClipboardList,
+  Paperclip,
+} from "lucide-react";
 import StatusBadge from "./StatusBadge";
 
 export default function ViewModal({ data, onClose }) {
-  // Fields to display in modal (professional order)
-  const fields = [
-    ["id", "ID"],
-    ["name", "Name"],
-    ["email", "Email"],
-    ["phoneNumber", "Phone"],
-    ["cityCountry", "City/Country"],
-    ["address", "Address"],
-    ["positionTitle", "Title"],
-    ["department", "Department"],
-    ["applicationType", "Type"],
-    ["linkedin", "LinkedIn"],
-    ["github", "GitHub"],
-    ["cv", "CV"],
-    ["coverLetter", "Cover Letter"],
-    ["agreement", "Agreement"],
-    ["joiningDate", "Joining Date"],
-    ["date", "Application Date"],
-  ];
+  const renderValue = (key, value, label) => {
+    if (!value && value !== false) return "—";
+
+    if (["linkedin", "github", "portfolio", "references"].includes(key)) {
+      return (
+        <a
+          href={value}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:underline flex items-center gap-1"
+        >
+          <Link2 className="w-4 h-4" /> {value.replace(/^https?:\/\//, "")}
+        </a>
+      );
+    }
+
+    if (["cv", "coverLetter"].includes(key)) {
+      return (
+        <a
+          href={value}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#080156] font-medium hover:underline flex items-center gap-1"
+        >
+          <FileText className="w-4 h-4" /> View {label}
+        </a>
+      );
+    }
+
+    if (key === "agreement") {
+      return (
+        <span
+          className={`font-semibold ${
+            value ? "text-green-600" : "text-red-600"
+          }`}
+        >
+          {value ? "Yes" : "No"}
+        </span>
+      );
+    }
+
+    return value;
+  };
+
+  const Section = ({ icon: Icon, title, children }) => (
+    <section className="bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all p-4">
+      <div className="flex items-center gap-2 mb-3 border-b pb-2">
+        <Icon className="w-4 h-4 text-[#080156]" />
+        <h3 className="text-base font-semibold text-[#080156]">{title}</h3>
+      </div>
+      {children}
+    </section>
+  );
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl w-full max-w-3xl shadow-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-3">
+      <div className="bg-gray-50 rounded-2xl w-full max-w-4xl shadow-2xl overflow-hidden">
         {/* Header */}
-        <div className="flex justify-between items-center px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-[#080156] to-[#1b1b5f] rounded-t-2xl">
-          <h2 className="text-lg font-semibold text-white">Application Details</h2>
+        <div className="flex justify-between items-center px-5 py-3 border-b bg-gradient-to-r from-[#080156] to-[#1b1b5f]">
+          <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+            <ClipboardList className="w-5 h-5 text-white" />
+            Applicant Overview
+          </h2>
           <button
             onClick={onClose}
-            className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition"
+            className="p-1.5 rounded-full bg-white/10 hover:bg-white/20 transition"
           >
             <XCircle className="w-5 h-5 text-white" />
           </button>
         </div>
 
         {/* Body */}
-        <div className="p-6 max-h-[75vh] overflow-y-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {fields.map(([key, label]) => {
-              const value = data[key];
-
-              if (!value && value !== 0 && value !== false) return null;
-
-              // Special handling for links and boolean
-              if (key === "cv" || key === "coverLetter") {
-                return (
-                  <div key={key} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                    <div className="text-xs uppercase text-gray-500 font-medium mb-1 tracking-wide">
-                      {label}
-                    </div>
-                    <a
-                      href={value}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-[#080156] hover:underline text-sm font-medium"
-                    >
-                      <Eye className="w-4 h-4" /> View {label}
-                    </a>
-                  </div>
-                );
-              } else if (key === "linkedin" || key === "github") {
-                return (
-                  <div key={key} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                    <div className="text-xs uppercase text-gray-500 font-medium mb-1 tracking-wide">
-                      {label}
-                    </div>
-                    <a
-                      href={value}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline text-sm font-medium"
-                    >
-                      {value.replace(/^https?:\/\//, "")}
-                    </a>
-                  </div>
-                );
-              } else if (key === "agreement") {
-                return (
-                  <div key={key} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                    <div className="text-xs uppercase text-gray-500 font-medium mb-1 tracking-wide">
-                      {label}
-                    </div>
-                    <div className="font-semibold text-gray-800">{value ? "Yes" : "No"}</div>
-                  </div>
-                );
-              }
-
-              // Default display
-              return (
-                <div key={key} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                  <div className="text-xs uppercase text-gray-500 font-medium mb-1 tracking-wide">
+        <div className="p-5 max-h-[75vh] overflow-y-auto custom-scrollbar space-y-4">
+          <Section icon={User} title="Personal Details">
+            <div className="grid sm:grid-cols-2 gap-3">
+              {[
+                ["name", "Full Name"],
+                ["email", "Email Address"],
+                ["phoneNumber", "Phone Number"],
+                ["cityCountry", "City / Country"],
+                ["address", "Address"],
+                ["agreement", "Agreement"],
+              ].map(([key, label]) => (
+                <div key={key}>
+                  <p className="text-xs uppercase text-gray-500 mb-0.5">
                     {label}
-                  </div>
-                  <div className="font-semibold text-gray-800">{value}</div>
+                  </p>
+                  <p className="font-medium text-gray-800 text-sm">
+                    {renderValue(key, data[key], label)}
+                  </p>
                 </div>
-              );
-            })}
-
-            {/* Status */}
-            <div className="md:col-span-2 bg-gray-50 rounded-xl p-4 border border-gray-100">
-              <div className="text-xs uppercase text-gray-500 font-medium mb-1 tracking-wide">
-                Status
-              </div>
-              <StatusBadge status={data.status} />
+              ))}
             </div>
-          </div>
+          </Section>
+
+          <Section icon={Briefcase} title="Job Application">
+            <div className="grid sm:grid-cols-2 gap-3">
+              {[
+                ["applicationType", "Application Type"],
+                ["positionTitle", "Position Title"],
+                ["department", "Department"],
+                ["joiningDate", "Joining Date"],
+                ["date", "Application Date"],
+                ["status", "Status"],
+              ].map(([key, label]) => (
+                <div key={key}>
+                  <p className="text-xs uppercase text-gray-500 mb-0.5">
+                    {label}
+                  </p>
+                  {key === "status" ? (
+                    <StatusBadge status={data[key]} />
+                  ) : (
+                    <p className="font-medium text-gray-800 text-sm">
+                      {renderValue(key, data[key], label)}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </Section>
+
+          <Section icon={GraduationCap} title="Experience & Education">
+            <div className="grid sm:grid-cols-2 gap-3">
+              {[
+                ["experienceYears", "Experience (Years)"],
+                ["previousCompany", "Previous Company"],
+                ["positionHeld", "Last Position Held"],
+                ["educationLevel", "Education Level"],
+                ["universityName", "University Name"],
+                ["graduationYear", "Graduation Year"],
+              ].map(([key, label]) => (
+                <div key={key}>
+                  <p className="text-xs uppercase text-gray-500 mb-0.5">
+                    {label}
+                  </p>
+                  <p className="font-medium text-gray-800 text-sm">
+                    {renderValue(key, data[key], label)}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </Section>
+
+          <Section icon={Paperclip} title="Skills & Links">
+            <div className="grid sm:grid-cols-2 gap-3">
+              {[
+                ["skills", "Skills"],
+                ["portfolio", "Portfolio"],
+                ["linkedin", "LinkedIn"],
+                ["github", "GitHub"],
+                ["references", "References"],
+                ["interest1", "Interest / Motivation"],
+              ].map(([key, label]) => (
+                <div key={key}>
+                  <p className="text-xs uppercase text-gray-500 mb-0.5">
+                    {label}
+                  </p>
+                  <p className="font-medium text-gray-800 text-sm">
+                    {renderValue(key, data[key], label)}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </Section>
+
+          <Section icon={FileText} title="Attachments">
+            <div className="grid sm:grid-cols-2 gap-3">
+              {[["cv", "CV / Resume"], ["coverLetter", "Cover Letter"]].map(
+                ([key, label]) => (
+                  <div key={key}>
+                    <p className="text-xs uppercase text-gray-500 mb-0.5">
+                      {label}
+                    </p>
+                    <p className="font-medium text-gray-800 text-sm">
+                      {renderValue(key, data[key], label)}
+                    </p>
+                  </div>
+                )
+              )}
+            </div>
+          </Section>
+        </div>
+
+        {/* Footer */}
+        <div className="px-5 py-3 border-t bg-gray-100 flex justify-end">
+          <button
+            onClick={onClose}
+            className="px-4 py-1.5 bg-[#080156] text-white rounded-lg hover:bg-[#0a017d] transition text-sm"
+          >
+            Close
+          </button>
         </div>
       </div>
     </div>

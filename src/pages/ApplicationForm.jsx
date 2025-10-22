@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { X, Upload, Calendar } from "lucide-react";
 
-const ApplicationForm = ({ onCancel, onSubmit }) => {
+const ApplicationForm = ({ onCancel, onSubmit}) => {
     const [formData, setFormData] = useState({
         fullName: "",
         phoneNumber: "",

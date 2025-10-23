@@ -16,8 +16,8 @@ import {
   Legend,
 } from "chart.js";
 import DashboardCards from "../../components/dashboard/DashboardCards";
-import UpcomingInterviewsTable from "../../components/dashboard/UpcomingInterviewsTAble";
 import RecentApplicationsTable from "../../components/dashboard/RecentApplicationsTable";
+import UpcomingInterviewsTable from './../../components/dashboard/UpcomingInterviewsTable';
 
 ChartJS.register(ArcElement, ChartTooltip, Legend);
 
@@ -124,7 +124,7 @@ const Overview= () => {
       <RecentApplicationsTable/>
 
         {/* Upcoming Interviews */}
-      <UpcomingInterviewsTable/>
+     <UpcomingInterviewsTable/>
       </div>
     </div>
   );

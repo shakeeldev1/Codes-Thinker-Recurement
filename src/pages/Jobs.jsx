@@ -41,38 +41,45 @@ const Jobs = () => {
     const categories = [...new Set(jobsData.map((job) => job.category))];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/30">
+        <div className="min-h-screen md:mt-20 bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/30">
             {/* Header with animation */}
-            <motion.header
-                initial={{ opacity: 0, y: -40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1 }}
-                className="relative bg-gradient-to-r from-[#060145] via-[#0c047e] to-[#060145] text-white py-20 overflow-hidden"
-            >
-                <div className="absolute inset-0 bg-black/10"></div>
-                <div className="relative max-w-7xl mx-auto px-4 text-center">
-                    <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ delay: 0.3, type: "spring", stiffness: 120 }}
-                        className="inline-flex items-center justify-center w-16 h-16 bg-white/10 rounded-2xl backdrop-blur-sm mb-6"
-                    >
-                        <Sparkles className="w-8 h-8 text-white" />
-                    </motion.div>
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
-                        Discover Your Next <span className="text-[#F59C20]">Career Move</span>
-                    </h1>
-                    <p className="text-base sm:text-lg md:text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed px-2">
-                        Connect with top companies and find opportunities that match your
-                        skills and ambitions
-                    </p>
-                </div>
+             <motion.header
+      initial={{ opacity: 0, y: -40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1 }}
+      className="relative bg-white text-white py-24 overflow-hidden"
+    >
+      {/* Soft glow overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-blue-600/10 to-transparent backdrop-blur-3xl"></div>
 
-                {/* Decorative background circles */}
-                <div className="absolute top-0 left-0 w-48 sm:w-72 h-48 sm:h-72 bg-blue-400/10 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
-                <div className="absolute bottom-0 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-indigo-400/10 rounded-full translate-x-1/3 translate-y-1/3"></div>
-            </motion.header>
+      {/* Content */}
+      <div className="relative max-w-6xl mx-auto px-6 text-center z-10">
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.3, type: "spring", stiffness: 120 }}
+          className="inline-flex items-center justify-center w-20 h-20 bg-[#0c008c] rounded-3xl backdrop-blur-md border border-white/20 shadow-[0_0_20px_rgba(255,255,255,0.2)] mb-6"
+        >
+          <Sparkles className="w-10 h-10 text-blue-200 drop-shadow-[0_0_10px_#00bfff]" />
+        </motion.div>
 
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 text-[#0c008c] drop-shadow-[0_0_10px_rgba(0,0,255,0.3)]">
+          Discover Your Next{" "}
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1E90FF] to-[#6a6eff]">
+            Career Move
+          </span>
+        </h1>
+
+        <p className="text-base sm:text-lg md:text-xl text-blue-800/90 max-w-3xl mx-auto leading-relaxed px-2 backdrop-blur-sm">
+          Connect with top companies and find opportunities that match your skills and ambitions.
+        </p>
+      </div>
+
+      {/* Decorative glass circles */}
+      <div className="absolute top-0 left-0 w-72 sm:w-96 h-72 sm:h-[28rem] bg-blue-400/20 rounded-full -translate-x-1/3 -translate-y-1/3 blur-3xl"></div>
+      <div className="absolute bottom-0 right-0 w-96 sm:w-[30rem] h-96 sm:h-[30rem] bg-cyan-400/20 rounded-full translate-x-1/3 translate-y-1/3 blur-3xl"></div>
+      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-white/5 to-blue-900/10"></div>
+    </motion.header>
             {/* Main Content */}
             <main className="max-w-7xl mx-auto px-4 py-12 -mt-8 relative">
                 {/* Search and Filters Section */}

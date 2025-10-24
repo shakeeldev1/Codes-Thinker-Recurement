@@ -39,6 +39,13 @@ const Navbar = () => {
               </Link>
               <Link
                 className="group relative text-white px-3 py-2 text-lg font-medium hover:text-[#01b5e8] transition-colors duration-300"
+                to="/about"
+              >
+                About
+                <span className="absolute left-1/2 bottom-0 w-0 h-[2px] bg-[#f5f9fa] transition-all duration-300 group-hover:w-full group-hover:left-0"></span>
+              </Link>
+              <Link
+                className="group relative text-white px-3 py-2 text-lg font-medium hover:text-[#01b5e8] transition-colors duration-300"
                 to="/jobs"
               >
                 Jobs

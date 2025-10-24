@@ -15,6 +15,7 @@ import InterviewPage from './pages/dashboard/InterviewPage';
 import JobPostPage from './pages/dashboard/JobPostPage';
 
 import { Toaster } from 'react-hot-toast'; // ✅ Import Toaster
+import About from './pages/About';
 
 // =======================
 // Main Site Layout
@@ -51,6 +52,7 @@ const router = createBrowserRouter([
     element: <MainComponent />,
     children: [
       { path: '/', element: <Home /> },
+      { path: '/about', element: <About /> },
       { path: '/jobs', element: <Jobs /> },
       { path: '/jobs/:id', element: <JobDetail /> },
     ],

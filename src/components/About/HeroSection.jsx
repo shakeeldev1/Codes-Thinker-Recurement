@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Users, Target, HeartHandshake } from "lucide-react";
+import { Users, Target } from "lucide-react";
 
 const HeroSection = () => {
   const texts = [
@@ -11,7 +11,6 @@ const HeroSection = () => {
 
   const [index, setIndex] = useState(0);
 
-  // Auto-change text every 4 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % texts.length);
@@ -20,27 +19,23 @@ const HeroSection = () => {
   }, [texts.length]);
 
   return (
-    <section className=" pt-5 relative mt-20 w-full min-h-[100vh] flex items-center justify-center bg-gray-900 text-white overflow-hidden">
-      {/* Background Animation */}
-      <div className="absolute inset-0">
-        <motion.div
-          animate={{
-            background: [
-              "radial-gradient(circle at 20% 30%, #2563eb55, transparent 50%)",
-              "radial-gradient(circle at 80% 70%, #06b6d455, transparent 50%)",
-              "radial-gradient(circle at 50% 50%, #4f46e555, transparent 50%)",
-            ],
-          }}
-          transition={{ duration: 8, repeat: Infinity, repeatType: "mirror" }}
-          className="absolute inset-0"
-        />
-      </div>
+    <section
+      className="relative mt-20 w-full min-h-[100vh] flex items-center justify-center text-white overflow-hidden"
+      style={{
+        backgroundImage: "url('/About-images/About-bg.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundAttachment: "fixed",
+      }}
+    >
+      {/* Overlay for readability */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#060145]/60 via-[#0a1555]/60 to-[#092272]/60 z-0"></div>
 
       {/* Content */}
       <div className="relative z-10 text-center px-6 sm:px-10 md:px-16 max-w-4xl mx-auto">
         {/* Animated Headline */}
         <AnimatePresence mode="wait">
-          <motion.h1
+          <motion.h2
             key={index}
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight"
             initial={{ opacity: 0, y: 20 }}
@@ -52,12 +47,12 @@ const HeroSection = () => {
             <span className="bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
               {texts[index].highlight}
             </span>
-          </motion.h1>
+          </motion.h2>
         </AnimatePresence>
 
         {/* Description */}
         <motion.p
-          className="text-base sm:text-lg md:text-xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed"
+          className="text-base sm:text-lg md:text-xl text-gray-200 mb-10 max-w-3xl mx-auto leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.8 }}

@@ -3,33 +3,41 @@ import { motion } from "framer-motion";
 import { FaTwitter, FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 const TeamSection = () => {
-  const teamMembers = [
-    {
-      name: "Jason Smith",
-      role: "Frontend Developer",
-      image: "/About-images/staff-1.jpg",
-    },
-    {
-      name: "Anne Hayes",
-      role: "Backend Engineer",
-      image: "/About-images/staff-2.jpg",
-    },
-    {
-      name: "Martha Smith",
-      role: "UI/UX Designer",
-      image: "/About-images/staff-3.jpg",
-    },
-    {
-      name: "Mike Tyson",
-      role: "Project Manager",
-      image: "/About-images/staff-4.jpg",
-    },
-  ];
+ const teamMembers = [
+  {
+    name: "Jason Smith",
+    role: "Frontend Developer",
+    image: "/About-images/staff-1.webp",
+    description:
+      "Passionate about creating pixel-perfect, responsive interfaces using React and modern design principles.",
+  },
+  {
+    name: "Anne Hayes",
+    role: "Project Manager",
+    image: "/About-images/staff-2.webp",
+    description:
+      "Leading teams efficiently with a focus on collaboration, delivery, and user satisfaction.",
+  },
+  {
+    name: "Martha Smith",
+    role: "UI/UX Designer",
+    image: "/About-images/staff-3.webp",
+    description:
+      "Crafting intuitive user experiences and elegant interfaces that bring ideas to life.",
+  },
+  {
+    name: "Mike Tyson",
+    role: "HR Executive",
+    image: "/About-images/staff-4.webp",
+    description:
+      "Committed to building strong teams and maintaining a healthy, productive workplace culture.",
+  },
+];
+
 
   return (
-    <section className="relative py-20 bg-gray-50 overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-100/30 via-cyan-100/20 to-transparent"></div>
+    <section className="relative py-20 bg-white overflow-hidden">
+     
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 text-center">
         {/* Heading */}
@@ -44,50 +52,75 @@ const TeamSection = () => {
             Team
           </span>
         </motion.h2>
-        <p className="text-gray-600 text-lg max-w-2xl mx-auto mb-12">
-          The brilliant minds behind Codes Thinker — dedicated to building future-ready solutions.
+        <p className="text-gray-600 text-lg max-w-2xl mx-auto mb-25">
+          The brilliant minds behind our mission — dedicated to creating
+          meaningful impact.
         </p>
 
         {/* Team Members Grid */}
-        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
+        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-10">
           {teamMembers.map((member, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.15, duration: 0.6 }}
-              className="group relative bg-white rounded-2xl shadow-md hover:shadow-xl overflow-hidden transition-all duration-300"
+              className=" group relative bg-[#060145cc] rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 pt-16 pb-6 px-5 overflow-visible hover:bg-white "
             >
-              {/* Profile Image */}
-              <div className="relative w-full h-64 overflow-hidden">
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </div>
+              {/* Circular Profile Image */}
+              <div
+                className=" absolute -top-12 left-1/2 transform -translate-x-1/2 w-32 h-32 rounded-full border-2 border-[#fdc700] bg-cover bg-center shadow-md group-hover:scale-105 group-hover:border-[#060145e1] transition-transform duration-500"
+                style={{ backgroundImage: `url(${member.image})` }}
+              ></div>
 
-              {/* Info */}
-              <div className="p-5 text-center">
-                <h3 className="text-lg font-semibold text-gray-900">{member.name}</h3>
-                <p className="text-cyan-600 text-sm font-medium mb-3">{member.role}</p>
+              {/* Text Section */}
+              <div className="text-center mt-4">
+                <h3 className="text-lg font-semibold text-white mb-1 group-hover:text-[#fdc700] ">
+                  {member.name}
+                </h3>
+                <span className="text-cyan-600 text-sm font-medium mb-3 block ">
+                  {member.role}
+                </span>
 
                 {/* Social Icons */}
-                <div className="flex justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                  <a href="#" className="p-2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white hover:scale-110 transition-transform">
-                    <FaTwitter />
-                  </a>
-                  <a href="#" className="p-2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white hover:scale-110 transition-transform">
-                    <FaFacebookF />
-                  </a>
-                  <a href="#" className="p-2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white hover:scale-110 transition-transform">
-                    <FaInstagram />
-                  </a>
-                  <a href="#" className="p-2 rounded-full bg-gradient-to-r from-blue-600 to-cyan-500 text-white hover:scale-110 transition-transform">
-                    <FaLinkedinIn />
-                  </a>
-                </div>
+                <ul className="flex justify-center gap-3 mb-4 transition-transform duration-300">
+
+                  <li>
+                    <a
+                      href="#"
+                      className="flex items-center justify-center w-8 h-8 rounded-full bg-[#fdc700] text-white hover:scale-110 transition-transform group-hover:bg-gradient-to-r from-blue-600 to-cyan-500"
+                    >
+                      <FaTwitter />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="flex items-center justify-center w-8 h-8 rounded-full bg-[#fdc700] text-white hover:scale-110 transition-transform group-hover:bg-gradient-to-r from-blue-600 to-cyan-500"
+                    >
+                      <FaFacebookF />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="flex items-center justify-center w-8 h-8 rounded-full bg-[#fdc700] text-white hover:scale-110 transition-transform group-hover:bg-gradient-to-r from-blue-600 to-cyan-500"
+                    >
+                      <FaInstagram />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="flex items-center justify-center w-8 h-8 rounded-full bg-[#fdc700] text-white hover:scale-110 transition-transform group-hover:bg-gradient-to-r from-blue-600 to-cyan-500"
+                    >
+                      <FaLinkedinIn />
+                    </a>
+                  </li>
+                </ul>
+
+                {/* Description */}
+                <p className="text-white group-hover:text-[#060145e1] text-sm">{member.description}</p>
               </div>
             </motion.div>
           ))}

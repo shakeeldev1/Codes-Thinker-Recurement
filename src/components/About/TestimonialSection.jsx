@@ -114,7 +114,7 @@ const TestimonialSection = () => {
                                     <div className="flex text-md sm:text-xl ml-2 gap-1">
                                         {[...Array(5)].map((_, index) => (
                                             <svg
-                                                key={""}
+                                                key={index}
                                                 stroke="currentColor"
                                                 fill="currentColor"
                                                 strokeWidth="0"

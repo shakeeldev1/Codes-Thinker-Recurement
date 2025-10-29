@@ -19,11 +19,11 @@ const Footer = () => {
       <div className="absolute -top-32 -right-24 w-72 h-72 bg-[#5A51D3]/30 rounded-full blur-3xl"></div>
       <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-[#0B055A]/60 rounded-full blur-3xl"></div>
 
-      <div className="relative max-w-7xl mx-auto px-6 py-16">
+      <div className="relative max-w-7xl mx-auto px-6 pt-15">
         {/* Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-10 mb-12">
+        <div className=" grid grid-cols-1 lg:grid-cols-4 gap-10 mb-12">
           {/* ===== Brand ===== */}
-          <div>
+          <div className="lg:pr-8 "> {/* Added padding-right */}
             <img src="./images/companylogo.webp" alt="CodesThinker Logo" className="w-40 mb-5" />
             <p className="text-gray-300 leading-relaxed text-sm mb-6">
               We craft digital experiences that transform businesses. Our team
@@ -34,9 +34,9 @@ const Footer = () => {
             <div className="flex space-x-3">
               {[
                 { icon: Facebook, color: "hover:bg-blue-500" },
-                { icon: Twitter, color: "hover:bg-sky-400" },
-                { icon: Linkedin, color: "hover:bg-blue-600" },
-                { icon: Instagram, color: "hover:bg-pink-500" },
+                { icon: Twitter, color: "hover:bg-blue-500" },
+                { icon: Linkedin, color: "hover:bg-blue-500" },
+                { icon: Instagram, color: "hover:bg-blue-500" },
               ].map((social, i) => (
                 <div
                   key={i}
@@ -49,7 +49,7 @@ const Footer = () => {
           </div>
 
           {/* ===== Services ===== */}
-          <div>
+          <div className="lg:pr-8 "> {/* Added padding-right */}
             <h3 className="text-xl font-semibold mb-6 relative after:content-[''] after:absolute after:w-10 after:h-[2px] after:bg-gradient-to-r from-[#5A51D3] to-[#9b8aff] after:-bottom-2 after:left-0 ml-6">
               Our Services
             </h3>
@@ -74,7 +74,7 @@ const Footer = () => {
           </div>
 
           {/* ===== Company ===== */}
-          <div>
+          <div className="lg:pr-8"> {/* Added padding-right */}
             <h3 className="text-xl font-semibold mb-6 relative after:content-[''] after:absolute after:w-10 after:h-[2px] after:bg-gradient-to-r from-[#9b8aff] to-[#5A51D3] after:-bottom-2 after:left-0 ml-6">
               Company
             </h3>
@@ -99,7 +99,7 @@ const Footer = () => {
           </div>
 
           {/* ===== Contact + Newsletter ===== */}
-          <div className="w-[400px]">
+          <div className="lg:pr-4 "> {/* Added padding-right */}
             <h3 className="text-xl font-semibold mb-6 relative after:content-[''] after:absolute after:w-10 after:h-[2px] after:bg-gradient-to-r from-[#3026b6] to-[#5A51D3] after:-bottom-2 after:left-0">
               Get In Touch
             </h3>
@@ -128,7 +128,7 @@ const Footer = () => {
                   <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-md flex-shrink-0 mt-1">
                     <MapPin className="w-4 h-4" />
                   </div>
-                  <span className="text-gray-300 group-hover:text-white transition-colors text-sm">
+                  <span className="text-gray-300 group-hover:text-white transition-colors text-sm leading-relaxed">
                     {address}
                   </span>
                 </div>
@@ -136,7 +136,7 @@ const Footer = () => {
             </div>
 
             {/* Newsletter */}
-            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10 hover:border-white/20 transition-all duration-300">
+            {/* <div className=" border-2 bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10 hover:border-white/20 transition-all duration-300">
               <p className="text-gray-200 text-sm mb-3 font-medium">
                 Stay updated with our newsletter
               </p>
@@ -153,12 +153,12 @@ const Footer = () => {
                   <Send className="w-4 h-4" />
                 </button>
               </form>
-            </div>
+            </div> */}
           </div>
         </div>
 
         {/* ===== Bottom Bar ===== */}
-        <div className="border-t border-white/20 pt-6">
+        <div className="border-t border-white/20 p-5">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm mb-4 md:mb-0">
               © 2024 <span className="text-indigo-400 font-semibold">Code's Thinker</span>. All rights reserved.

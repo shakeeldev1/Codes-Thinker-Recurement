@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Phone, Mail, MapPin, Clock, Send, MessageCircle } from "lucide-react";
+import {  MapPin, Send, MessageCircle,MessageSquare, Users, Zap, Globe } from "lucide-react";
+
+
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -24,36 +26,7 @@ const Contact = () => {
     console.log("Form submitted:", formData);
   };
 
-  const contactMethods = [
-    {
-      icon: Phone,
-      title: "Call Us",
-      details: "+44 7470 103120",
-      description: "Mon to Fri from 9am to 6pm",
-      color: "from-[#298ade] to-cyan-500"
-    },
-    {
-      icon: Mail,
-      title: "Email Us",
-      details: "info@codesthinker.com",
-      description: "Send us your queries anytime",
-      color: "from-[#298ade] to-cyan-500"
-    },
-    {
-      icon: MapPin,
-      title: "Visit Us",
-      details: "Manchester & Bahawalpur",
-      description: "Visit our offices worldwide",
-      color: "from-[#298ade] to-cyan-500"
-    },
-    {
-      icon: Clock,
-      title: "Response Time",
-      details: "Within 24 Hours",
-      description: "We reply super fast",
-      color: "from-[#298ade] to-cyan-500"
-    }
-  ];
+ 
 
   return (
     <div className="min-h-screen bg-[#0c0934ef] py-12 px-4 sm:px-6 lg:px-8">
@@ -81,23 +54,54 @@ const Contact = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="space-y-8"
           >
-            {/* Contact Methods Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {contactMethods.map((method, index) => (
-                <motion.div
-                  key={index}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:border-cyan-400/30 transition-all duration-300"
-                >
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${method.color} flex items-center justify-center mb-4 shadow-lg`}>
-                    <method.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-white mb-2">{method.title}</h3>
-                  <p className="text-cyan-300 font-medium text-sm">{method.details}</p>
-                  <p className="text-gray-400 text-xs mt-1">{method.description}</p>
-                </motion.div>
-              ))}
-            </div>
+             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
+                            <div className="grid grid-cols-2 gap-4">
+                                {[
+                                    {
+                                        icon: Users,
+                                        text: "Expert Team",
+                                        progress: 95
+                                    },
+                                    {
+                                        icon: Zap,
+                                        text: "Fast Delivery",
+                                        progress: 90
+                                    },
+                                    {
+                                        icon: Globe,
+                                        text: "Global Reach",
+                                        progress: 85
+                                    },
+                                    {
+                                        icon: MessageSquare,
+                                        text: "24/7 Support",
+                                        progress: 98
+                                    },
+                                ].map((feature, index) => (
+                                    <motion.div
+                                        key={index}
+                                        whileHover={{ y: -5 }}
+                                        className="bg-white/10 rounded-2xl p-4 border border-white/5"
+                                    >
+                                        <div className="w-10 h-10 bg-gradient-to-r from-[#298ade] to-cyan-500 rounded-lg flex items-center justify-center mb-3">
+                                            <feature.icon className="w-5 h-5 text-white" />
+                                        </div>
+                                        <h3 className="text-white font-semibold text-sm mb-2">{feature.text}</h3>
+                                        <div className="w-full bg-white/20 rounded-full h-1.5 mb-1">
+                                            <motion.div
+                                                initial={{ width: 0 }}
+                                                animate={{ width: `${feature.progress}%` }}
+                                                transition={{ duration: 1, delay: index * 0.1 }}
+                                                className="bg-gradient-to-r from-[#298ade] to-cyan-500 h-1.5 rounded-full"
+                                            ></motion.div>
+                                        </div>
+                                        <div className="text-right">
+                                            <span className="text-cyan-300 text-xs font-bold">{feature.progress}%</span>
+                                        </div>
+                                    </motion.div>
+                                ))}
+                            </div>
+                        </div>
 
             {/* Office Locations */}
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">

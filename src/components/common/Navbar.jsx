@@ -126,11 +126,25 @@ const Navbar = () => {
               Home
             </Link>
             <Link
+              to="/about"
+              onClick={() => setIsMenuOpen(false)}
+              className="text-white text-lg font-medium hover:text-[#01b5e8]"
+            >
+              About
+            </Link>
+             <Link
               to="/jobs"
               onClick={() => setIsMenuOpen(false)}
               className="text-white text-lg font-medium hover:text-[#01b5e8]"
             >
               Jobs
+            </Link>
+             <Link
+              to="/contact"
+              onClick={() => setIsMenuOpen(false)}
+              className="text-white text-lg font-medium hover:text-[#01b5e8]"
+            >
+              Contact
             </Link>
             <Link
               to="/faqs"

@@ -32,6 +32,7 @@ const TeamSection = () => {
     description:
       "Committed to building strong teams and maintaining a healthy, productive workplace culture.",
   },
+  
 ];
 
 
@@ -58,18 +59,18 @@ const TeamSection = () => {
         </p>
 
         {/* Team Members Grid */}
-        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-10">
+        <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-x-10 gap-y-20  ">
           {teamMembers.map((member, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.15, duration: 0.6 }}
-              className=" group relative bg-[#060145cc] rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 pt-16 pb-6 px-5 overflow-visible hover:bg-white "
+             className="group relative bg-[#060145cc] rounded-2xl shadow-md hover:shadow-xl hover:border hover:border-[#fdc700] hover:-translate-y-2 transition-all duration-500 pt-18 pb-6 px-5  overflow-visible hover:bg-white"
             >
               {/* Circular Profile Image */}
               <div
-                className=" absolute -top-12 left-1/2 transform -translate-x-1/2 w-32 h-32 rounded-full border-2 border-[#fdc700] bg-cover bg-center shadow-md group-hover:scale-105 group-hover:border-[#060145e1] transition-transform duration-500"
+                className=" absolute -top-12 left-1/2 transform -translate-x-1/2 w-32 h-32 rounded-full border-2 border-[#fdc700] bg-cover bg-center shadow-md group-hover:scale-105 group-hover:border group-hover:border-[#060145e1] transition-transform duration-500"
                 style={{ backgroundImage: `url(${member.image})` }}
               ></div>
 

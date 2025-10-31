@@ -15,7 +15,7 @@ export default function ViewModal({ data, onClose }) {
   const renderValue = (key, value, label) => {
     if (!value && value !== false) return "—";
 
-    if (["linkedin", "github", "portfolio", "references"].includes(key)) {
+    if (["linkedin", "github", "portfolio", "viewJobPostSource", "reference"].includes(key)) {
       return (
         <a
           href={value}
@@ -44,9 +44,7 @@ export default function ViewModal({ data, onClose }) {
     if (key === "agreement") {
       return (
         <span
-          className={`font-semibold ${
-            value ? "text-green-600" : "text-red-600"
-          }`}
+          className={`font-semibold ${value ? "text-green-600" : "text-red-600"}`}
         >
           {value ? "Yes" : "No"}
         </span>
@@ -85,14 +83,15 @@ export default function ViewModal({ data, onClose }) {
 
         {/* Body */}
         <div className="p-5 max-h-[75vh] overflow-y-auto custom-scrollbar space-y-4">
+          {/* Personal Details */}
           <Section icon={User} title="Personal Details">
             <div className="grid sm:grid-cols-2 gap-3">
               {[
-                ["name", "Full Name"],
-                ["email", "Email Address"],
+                ["fullName", "Full Name"],
+                ["email", "Email"],
                 ["phoneNumber", "Phone Number"],
-                ["cityCountry", "City / Country"],
-                ["address", "Address"],
+                ["country", "Country"],
+                ["city", "City"],
                 ["agreement", "Agreement"],
               ].map(([key, label]) => (
                 <div key={key}>
@@ -107,13 +106,16 @@ export default function ViewModal({ data, onClose }) {
             </div>
           </Section>
 
-          <Section icon={Briefcase} title="Job Application">
+          {/* Job Information */}
+          <Section icon={Briefcase} title="Job Information">
             <div className="grid sm:grid-cols-2 gap-3">
               {[
-                ["applicationType", "Application Type"],
-                ["positionTitle", "Position Title"],
+                ["jobTitle", "Job Title"],
                 ["department", "Department"],
-                ["joiningDate", "Joining Date"],
+                ["experienceLevel", "Experience Level"],
+                ["expectedJoiningDate", "Expected Joining Date"],
+                ["expectedSalary", "Expected Salary"],
+                ["viewJobPostSource", "Job Post Source"],
                 ["date", "Application Date"],
                 ["status", "Status"],
               ].map(([key, label]) => (
@@ -133,15 +135,13 @@ export default function ViewModal({ data, onClose }) {
             </div>
           </Section>
 
-          <Section icon={GraduationCap} title="Experience & Education">
+          {/* Education */}
+          <Section icon={GraduationCap} title="Education">
             <div className="grid sm:grid-cols-2 gap-3">
               {[
-                ["experienceYears", "Experience (Years)"],
-                ["previousCompany", "Previous Company"],
-                ["positionHeld", "Last Position Held"],
-                ["educationLevel", "Education Level"],
-                ["universityName", "University Name"],
-                ["graduationYear", "Graduation Year"],
+                ["degree", "Degree"],
+                ["skills", "Skills"],
+                ["additionalInfo", "Additional Info"],
               ].map(([key, label]) => (
                 <div key={key}>
                   <p className="text-xs uppercase text-gray-500 mb-0.5">
@@ -155,15 +155,14 @@ export default function ViewModal({ data, onClose }) {
             </div>
           </Section>
 
-          <Section icon={Paperclip} title="Skills & Links">
+          {/* Links */}
+          <Section icon={Link2} title="Links">
             <div className="grid sm:grid-cols-2 gap-3">
               {[
-                ["skills", "Skills"],
                 ["portfolio", "Portfolio"],
                 ["linkedin", "LinkedIn"],
                 ["github", "GitHub"],
-                ["references", "References"],
-                ["interest1", "Interest / Motivation"],
+                ["reference", "Reference"],
               ].map(([key, label]) => (
                 <div key={key}>
                   <p className="text-xs uppercase text-gray-500 mb-0.5">
@@ -177,20 +176,22 @@ export default function ViewModal({ data, onClose }) {
             </div>
           </Section>
 
-          <Section icon={FileText} title="Attachments">
+          {/* Attachments */}
+          <Section icon={Paperclip} title="Attachments">
             <div className="grid sm:grid-cols-2 gap-3">
-              {[["cv", "CV / Resume"], ["coverLetter", "Cover Letter"]].map(
-                ([key, label]) => (
-                  <div key={key}>
-                    <p className="text-xs uppercase text-gray-500 mb-0.5">
-                      {label}
-                    </p>
-                    <p className="font-medium text-gray-800 text-sm">
-                      {renderValue(key, data[key], label)}
-                    </p>
-                  </div>
-                )
-              )}
+              {[
+                ["cv", "CV / Resume"],
+                ["coverLetter", "Cover Letter"],
+              ].map(([key, label]) => (
+                <div key={key}>
+                  <p className="text-xs uppercase text-gray-500 mb-0.5">
+                    {label}
+                  </p>
+                  <p className="font-medium text-gray-800 text-sm">
+                    {renderValue(key, data[key], label)}
+                  </p>
+                </div>
+              ))}
             </div>
           </Section>
         </div>

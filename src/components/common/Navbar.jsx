@@ -15,7 +15,7 @@ const Navbar = () => {
   {/* Always show the company logo on all devices */}
   <Link
     to="/"
-    className="flex items-center justify-center transition-transform duration-500 group-hover:scale-105"
+    className="flex items-center justify-center"
   >
     <img
       src="/images/companylogo.webp"

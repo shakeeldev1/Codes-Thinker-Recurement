@@ -13,7 +13,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-br from-[#07023B] via-[#0B0464] to-[#10085E] text-white relative overflow-hidden">
+    <footer className="bg-[#060145]  text-white relative overflow-hidden">
       {/* Background Effects */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#3026b6]/10 via-transparent to-purple-700/10"></div>
       <div className="absolute -top-32 -right-24 w-72 h-72 bg-[#5A51D3]/30 rounded-full blur-3xl"></div>

@@ -34,7 +34,7 @@ const HeroSlider = () => {
       description:
         "Get hired by innovative company pushing the boundaries of technology and innovation.",
       bgImage: "/images/bg-slider.avif",
-      gradient: "from-purple-600 to-indigo-500",
+      gradient: "from-blue-700 to-cyan-600",
       features: ["FAANG Companies", "Startups", "Enterprise Clients"],
     },
   ];

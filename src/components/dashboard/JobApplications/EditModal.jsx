@@ -11,9 +11,9 @@ export default function EditModal({ data, onSave, onClose }) {
     ["name", "Full Name"],
     ["email", "Email"],
     ["phoneNumber", "Phone"],
-    ["positionTitle", "Position Title"],
+    ["jobTitle", "Job Title"],
     ["department", "Department"],
-    ["applicationType", "Application Type"],
+    ["experienceLevel", "Experience Level"],
   ];
 
   // Optional links or documents
